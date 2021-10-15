@@ -3,6 +3,8 @@
 Install NodeJs
 https://nodejs.org/en/
 
+# git clone https://github.com/Radutiu-Horatiu/pc-feedback-backend.git
+
 # cd in project
 
 # npm install
