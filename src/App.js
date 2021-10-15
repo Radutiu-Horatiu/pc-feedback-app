@@ -1,7 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import React from "react";
+import { addDoc, collection } from "@firebase/firestore";
+import { db } from "./firebase";
 
 function App() {
+  React.useEffect(() => {
+    (async () => {
+      await addDoc(collection(db, "test"), {
+        data: "This is a test.",
+      });
+    })();
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
