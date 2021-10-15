@@ -1,15 +1,26 @@
 import logo from "./logo.svg";
 import "./App.css";
 import React from "react";
-import { addDoc, collection } from "@firebase/firestore";
+import { doc, setDoc } from "@firebase/firestore";
 import { db } from "./firebase";
+import axios from "axios";
 
 function App() {
   React.useEffect(() => {
+    // firebase connection example
     (async () => {
-      await addDoc(collection(db, "test"), {
+      await setDoc(doc(db, "test", "test"), {
         data: "This is a test.",
       });
+    })();
+
+    // fastapi example
+    (async () => {
+      const response = await axios.request({
+        method: "GET",
+        url: "http://127.0.0.1:8000/test",
+      });
+      console.log(response.data);
     })();
   }, []);
 
