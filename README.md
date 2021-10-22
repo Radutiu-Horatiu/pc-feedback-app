@@ -3,7 +3,7 @@
 Install NodeJs
 https://nodejs.org/en/
 
-# git clone https://github.com/Radutiu-Horatiu/pc-feedback-backend.git
+# git clone https://github.com/Radutiu-Horatiu/pc-feedback-app.git
 
 # cd in project
 
@@ -12,3 +12,6 @@ https://nodejs.org/en/
 # npm start
 
 Project started on: http://localhost:3000/
+
+New updates:
+# git checkout -b <branch_name>
