@@ -18,7 +18,7 @@ function App() {
     (async () => {
       const response = await axios.request({
         method: "GET",
-        url: "http://127.0.0.1:8000/test",
+        url: "http://127.0.0.1:8000/ceva",
       });
       console.log(response.data);
     })();
