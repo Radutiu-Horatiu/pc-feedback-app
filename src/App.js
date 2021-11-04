@@ -26,11 +26,11 @@ function App() {
   }, []);
 
   return (
-    <Switch>
-      <Route path="/">
-        <HomeScreen />
-      </Route>
-    </Switch>
+      <Switch>
+        <Route path="/">
+          <HomeScreen />
+        </Route>
+      </Switch>
   );
 }
 
