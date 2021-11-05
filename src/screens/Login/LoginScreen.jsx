@@ -27,7 +27,7 @@ export default function LoginScreen() {
                 </Box>
                 <Box align="center" padding="10">
                     <FormControl>
-                        <Button colorScheme="blue">Log In</Button>
+                        <Button colorScheme="teal">Log In</Button>
                     </FormControl>
                 </Box>
             </Grid>

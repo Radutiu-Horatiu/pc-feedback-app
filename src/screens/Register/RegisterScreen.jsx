@@ -39,7 +39,7 @@ export default function RegisterScreen() {
                 </Box>
                 <Box align="center" padding="10">
                     <FormControl>
-                        <Button colorScheme="blue">Register</Button>
+                        <Button colorScheme="teal">Register</Button>
                     </FormControl>
                 </Box>
             </Grid>
