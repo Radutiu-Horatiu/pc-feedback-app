@@ -6,6 +6,7 @@ import axios from "axios";
 import HomeScreen from "./screens/HomeScreen/HomeScreen";
 import { Route, Switch } from "react-router";
 import LoginScreen from "./screens/Login/LoginScreen";
+import RegisterScreen from "./screens/Register/RegisterScreen";
 
 function App() {
   React.useEffect(() => {
@@ -28,6 +29,9 @@ function App() {
 
   return (
     <Switch>
+      <Route path="/register">
+        <RegisterScreen />
+      </Route>
       <Route path="/login">
         <LoginScreen />
       </Route>

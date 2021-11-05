@@ -16,7 +16,6 @@ export default function HomeScreen() {
     <Flex>
       <Navbar></Navbar>
       <Text>{username}</Text>
-      
     </Flex>
     
   )
