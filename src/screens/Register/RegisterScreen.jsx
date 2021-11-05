@@ -9,10 +9,16 @@ import {
 } from "@chakra-ui/react"
 import { Button } from "@chakra-ui/react"
 
-export default function LoginScreen() {
+export default function RegisterScreen() {
     return (
         <Flex w="100vw" h="100vh" justify="center" align="center">
             <Grid>
+                <Box padding="1">
+                    <FormControl id="name" isRequired>
+                        <FormLabel>Name</FormLabel>
+                        <Input placeholder="Name" />
+                    </FormControl>
+                </Box>
                 <Box padding="1">
                     <FormControl id="email" isRequired>
                         <FormLabel>Email</FormLabel>
@@ -25,9 +31,15 @@ export default function LoginScreen() {
                         <Input type={"password"} placeholder="Password" />
                     </FormControl>
                 </Box>
+                <Box padding="1">
+                    <FormControl id="confirmPassword" isRequired>
+                        <FormLabel>Confirm password</FormLabel>
+                        <Input type={"password"} placeholder="Please confirm password" />
+                    </FormControl>
+                </Box>
                 <Box align="center" padding="10">
                     <FormControl>
-                        <Button colorScheme="blue">Log In</Button>
+                        <Button colorScheme="blue">Register</Button>
                     </FormControl>
                 </Box>
             </Grid>

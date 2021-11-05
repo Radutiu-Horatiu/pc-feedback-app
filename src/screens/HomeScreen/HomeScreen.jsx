@@ -14,7 +14,6 @@ export default function HomeScreen() {
   return (
     <Flex>
       <Text>{username}</Text>
-      
     </Flex>
     
   )
