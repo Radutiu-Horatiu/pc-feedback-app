@@ -27,16 +27,14 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <Switch>
-        <Route path="/login">
-          <LoginScreen />
-        </Route>
-        <Route path="/">
-          <HomeScreen />
-        </Route>
-      </Switch>
-    </Router>
+    <Switch>
+      <Route path="/login">
+        <LoginScreen />
+      </Route>
+      <Route path="/">
+        <HomeScreen />
+      </Route>
+    </Switch>
   );
 }
 
