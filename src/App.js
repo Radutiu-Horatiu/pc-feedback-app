@@ -4,7 +4,8 @@ import { doc, setDoc } from "@firebase/firestore";
 import { db } from "./firebase";
 import axios from "axios";
 import HomeScreen from "./screens/HomeScreen/HomeScreen";
-import { Route, Switch } from "react-router";
+import UserProfile from "./screens/UserProfile/UserProfile";
+import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 
 function App() {
   React.useEffect(() => {
@@ -26,11 +27,16 @@ function App() {
   }, []);
 
   return (
+    <Router>
       <Switch>
+        <Route path="/user-profile">
+          <UserProfile />
+        </Route>
         <Route path="/">
           <HomeScreen />
         </Route>
       </Switch>
+    </Router>
   );
 }
 
