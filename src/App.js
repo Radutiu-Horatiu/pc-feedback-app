@@ -5,6 +5,7 @@ import { db } from "./firebase";
 import axios from "axios";
 import HomeScreen from "./screens/HomeScreen/HomeScreen";
 import { Route, Switch } from "react-router";
+import LoginScreen from "./screens/Login/LoginScreen";
 
 function App() {
   React.useEffect(() => {
@@ -27,6 +28,9 @@ function App() {
 
   return (
       <Switch>
+        <Route path="/login">
+          <LoginScreen />
+        </Route>
         <Route path="/">
           <HomeScreen />
         </Route>
