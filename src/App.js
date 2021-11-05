@@ -27,6 +27,7 @@ function App() {
   }, []);
 
   return (
+    <Router>
       <Switch>
         <Route path="/login">
           <LoginScreen />
@@ -35,6 +36,7 @@ function App() {
           <HomeScreen />
         </Route>
       </Switch>
+    </Router>
   );
 }
 
