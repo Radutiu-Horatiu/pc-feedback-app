@@ -23,14 +23,14 @@ export default function UserProfile() {
 	}, [dispatch, username]);**/
     return (
     <Flex flexDirection="column">
-        <Text>{username}</Text>
-        <Text>{email}</Text>
-        <Text>{name}</Text>
-        <Text>{role}</Text>
-        <Text>{fiscalYear}</Text>
-        <Text>{personalNumber}</Text>
-        <Text>{careerLevel}</Text>
-        <Text>{organizationalAssignments}</Text>
+        <Text>Username: {username}</Text>
+        <Text>Email: {email}</Text>
+        <Text>Name: {name}</Text>
+        <Text>Role: {role}</Text>
+        <Text>Fiscal Year: {fiscalYear}</Text>
+        <Text>Personal Number: {personalNumber}</Text>
+        <Text>Career Level: {careerLevel}</Text>
+        <Text>Organizational Assignments: {organizationalAssignments}</Text>
     </Flex>
     )
 }
