@@ -4,6 +4,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from '../../store/user/user-slice';
 import { Tag } from '@chakra-ui/tag';
+import { FormControl, FormLabel, Select, FormErrorMessage, FormHelperText, Input} from "@chakra-ui/react"
 export default function UserProfile() {
   
     
@@ -23,14 +24,49 @@ export default function UserProfile() {
 	}, [dispatch, username]);**/
     return (
     <Flex flexDirection="column">
-        <Text>Username: {username}</Text>
-        <Text>Email: {email}</Text>
-        <Text>Name: {name}</Text>
-        <Text>Role: {role}</Text>
-        <Text>Fiscal Year: {fiscalYear}</Text>
-        <Text>Personal Number: {personalNumber}</Text>
-        <Text>Career Level: {careerLevel}</Text>
-        <Text>Organizational Assignments: {organizationalAssignments}</Text>
+
+        <FormControl id="Email" isDisabled={true}>
+            <FormLabel>Email: </FormLabel>
+            <Input type="Email" />
+        </FormControl>
+
+        <FormControl id="Username" isDisabled={true}>
+            <FormLabel>Username: </FormLabel>
+            <Input type="Username" />
+        </FormControl>
+
+        <FormControl id="Name" isDisabled={false}>
+            <FormLabel>Full Name: </FormLabel>
+            <Input type="Name" />
+            <FormHelperText>Enter your first and last Name</FormHelperText>
+        </FormControl>
+
+        <FormControl id="FiscalYear" isDisabled={true}>
+            <FormLabel>Fiscal Year: </FormLabel>
+            <Input type="FiscalYear" />
+        </FormControl>
+
+        <FormControl id="PersonalNumber" isDisabled={true}>
+            <FormLabel>Personal Number: </FormLabel>
+            <Input type="PersonalNumber" />
+        </FormControl>
+
+        <FormControl id="CareerLevel">
+            <FormLabel>Career Level: </FormLabel>
+                <Select placeholder="Select career level">
+                    <option>Option1</option>
+                    <option>Option2</option>
+                </Select>
+        </FormControl>
+
+        <FormControl id="OrganizationalAssignments">
+            <FormLabel>Organizational Assignments: </FormLabel>
+                <Select placeholder="Select Organizational Assignments">
+                    <option>Option1</option>
+                    <option>Option2</option>
+                </Select>
+        </FormControl>
+
     </Flex>
     )
 }
