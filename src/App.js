@@ -4,8 +4,8 @@ import { doc, setDoc } from "@firebase/firestore";
 import { db } from "./firebase";
 import axios from "axios";
 import HomeScreen from "./screens/HomeScreen/HomeScreen";
-import UserProfile from "./screens/UserProfile/UserProfile";
-import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import { Route, Switch } from "react-router";
+import LoginScreen from "./screens/Login/LoginScreen";
 
 function App() {
   React.useEffect(() => {
@@ -29,8 +29,8 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/user-profile">
-          <UserProfile />
+        <Route path="/login">
+          <LoginScreen />
         </Route>
         <Route path="/">
           <HomeScreen />
