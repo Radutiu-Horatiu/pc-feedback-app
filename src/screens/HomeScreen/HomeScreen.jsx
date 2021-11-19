@@ -1,10 +1,11 @@
-import { Flex } from "@chakra-ui/react";
-import { Text } from "@chakra-ui/layout";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { userActions } from "../../store/user/user-slice";
-import { auth } from "../../firebase";
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "@firebase/auth";
+import { Flex } from '@chakra-ui/react'
+import { Text } from '@chakra-ui/layout'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { userActions } from '../../store/user/user-slice';
+import { Link } from "react-router-dom";
+import Navbar from './Navbar';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "@firebase/auth
 
 export default function HomeScreen() {
 	const dispatch = useDispatch();
