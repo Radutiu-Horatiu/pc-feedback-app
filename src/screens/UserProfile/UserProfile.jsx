@@ -23,7 +23,7 @@ export default function UserProfile() {
         
 	}, [dispatch, username]);**/
     return (
-    <Flex flexDirection="column" w="100vw" h="100vh" justify="left" align="left">
+    <Flex flexDirection="column" justify="left" align="left">
 
         <FormControl id="Email" isDisabled={true} padding="3">
             <FormLabel>Email: </FormLabel>

@@ -1,47 +1,29 @@
 import { Flex } from "@chakra-ui/react";
 import { Text } from "@chakra-ui/layout";
 import React, { useEffect } from "react";
+import { Button } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../store/user/user-slice";
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-} from "@firebase/auth";
-import { auth } from "../../firebase";
-import NewPEG from "./NewPEG";
+import { useHistory } from "react-router";
+import { logout } from "../../store/user/utils";
 
 export default function HomeScreen() {
-  const dispatch = useDispatch();
-  const username = useSelector((state) => state.user.username);
-  const email = useSelector((state) => state.user.email);
-  useEffect(() => {
-    dispatch(userActions.setUsername({ username: "Dummy rname" }));
-  }, [dispatch, username]);
-  useEffect(() => {
-    login("omihai00@gmail.com", "123456");
-  }, []);
+	const history = useHistory();
+	const dispatch = useDispatch();
+	const username = useSelector((state) => state.user.username);
+	const email = useSelector((state) => state.user.email);
 
-  const login = (email, pass) => {
-    signInWithEmailAndPassword(auth, email, pass)
-      .then((userCredentials) => {
-        dispatch(userActions.setEmail({ email: userCredentials.user.email }));
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-  const register = (email, pass) => {
-    createUserWithEmailAndPassword(auth, email, pass)
-      .then((userCredentials) => {
-        dispatch(userActions.setEmail({ email: userCredentials.user.email }));
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-  return (
-    <Flex>
-      <NewPEG></NewPEG>
-    </Flex>
-  );
+	const logUserOut = () => {
+		logout();
+		dispatch(userActions.signOut());
+		history.push("/login");
+	}
+
+	return (
+		<Flex>
+			<Text>{email}</Text>
+			<Text>{username}</Text>
+			<Button onClick={logUserOut}>Log out</Button>
+		</Flex>
+	);
 }

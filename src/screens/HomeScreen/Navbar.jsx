@@ -27,7 +27,6 @@ export default function Navbar() {
     dispatch(userActions.setUsername({ username: "Dummy rname" }));
     console.log(user);
   }, [dispatch, user]);
-
   return (
     <>
       <Flex flexDir="column" w="15vw" backgroundColor="teal.500">
