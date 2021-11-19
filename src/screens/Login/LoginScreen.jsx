@@ -11,7 +11,7 @@ import { userActions } from "../../store/user/user-slice";
 import { useHistory } from "react-router";
 
 export default function LoginScreen() {
-    const history = useHistory();
+	const history = useHistory();
 	const dispatch = useDispatch();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -19,7 +19,7 @@ export default function LoginScreen() {
 		signInWithEmailAndPassword(auth, email, password)
 			.then((userCredentials) => {
 				dispatch(userActions.setEmail({ email: userCredentials?.user?.email }));
-                history.push("/");
+				history.push("/");
 			})
 			.catch((e) => {
 				console.log(e);
@@ -57,6 +57,14 @@ export default function LoginScreen() {
 					<FormControl>
 						<Button colorScheme="teal" onClick={login}>
 							Log In
+						</Button>
+					</FormControl>
+				</Box>
+				<Box align="center">
+					<Text padding="5"><strong>Are you new? Please register!</strong></Text>
+					<FormControl>
+						<Button colorScheme="teal" onClick={() => history.push("/register")}>
+							Register
 						</Button>
 					</FormControl>
 				</Box>
