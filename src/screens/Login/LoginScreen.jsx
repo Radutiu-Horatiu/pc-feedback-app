@@ -4,7 +4,7 @@ import { Text } from "@chakra-ui/layout";
 import React, { useState } from "react";
 import { FormControl, FormLabel, Input, Grid, Box } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "@firebase/auth";
+import { signInWithEmailAndPassword } from "@firebase/auth";
 import { auth } from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../store/user/user-slice";
@@ -23,15 +23,7 @@ export default function LoginScreen() {
 				console.log(e);
 			});
 	};
-	const register = (email, pass) => {
-		createUserWithEmailAndPassword(auth, email, pass)
-			.then((userCredentials) => {
-				dispatch(userActions.setEmail({ email: userCredentials.user.email }));
-			})
-			.catch((e) => {
-				console.log(e);
-			});
-	};
+
 	return (
 		<Flex justify="center" align="center">
 			<Grid>
@@ -39,7 +31,7 @@ export default function LoginScreen() {
 					<FormControl id="email" isRequired>
 						<FormLabel>Email</FormLabel>
 						<Input
-							type={"email"}
+							type="email"
 							placeholder="Email"
 							onChange={(e) => {
 								setEmail(e.target.value);
