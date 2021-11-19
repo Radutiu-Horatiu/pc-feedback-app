@@ -9,6 +9,7 @@ import LoginScreen from "./screens/Login/LoginScreen";
 import RegisterScreen from "./screens/Register/RegisterScreen";
 import Navbar from "./screens/HomeScreen/Navbar";
 import { Flex, Text } from "@chakra-ui/layout";
+import UserProfile from "./screens/UserProfile/UserProfile";
 
 function App() {
   React.useEffect(() => {
@@ -46,6 +47,9 @@ function App() {
             </Route>
             <Route path="/login">
               <LoginScreen />
+            </Route>
+            <Route path="/user-profile">
+              <UserProfile />
             </Route>
             <Route path="/">
               <HomeScreen />
