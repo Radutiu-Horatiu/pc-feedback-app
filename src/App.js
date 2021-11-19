@@ -1,7 +1,7 @@
 import "./App.css";
 import React, { useState } from "react";
 import HomeScreen from "./screens/HomeScreen/HomeScreen";
-import { Route, Switch } from "react-router";
+import { Route, Switch, useHistory } from "react-router";
 import LoginScreen from "./screens/Login/LoginScreen";
 import RegisterScreen from "./screens/Register/RegisterScreen";
 import Navbar from "./screens/HomeScreen/Navbar";
@@ -13,10 +13,12 @@ import { auth } from "./firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "./store/user/user-slice";
 import RequestPeg from "./screens/RequestPeg/RequestPeg";
+import NewPEG from "./screens/NewPEG";
 import UserProfile from "./screens/UserProfile/UserProfile";
 
 function App() {
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const [loggedIn, setloggedIn] = useState(false);
 	const user = useSelector((state) => state.user);
 
@@ -49,7 +51,7 @@ function App() {
 			<Flex flexDir="column" w="100%">
 				{/* Buttons */}
 				{loggedIn && <Flex w="100%" p="2vh">
-					<Button w="100%">
+					<Button w="100%" onClick={() => history.push("/new-peg")}>
 						<FaPlus />
 						<Text ml="1vh">Request new PEG</Text>
 					</Button>
@@ -61,8 +63,11 @@ function App() {
 				{/* Dynamic content screen */}
 				<Flex h="100%" justify="center" align="center">
 					<Switch>
-						<Route path="/peg-request">
+						<Route path="/peg-requests">
 							<RequestPeg />
+						</Route>
+						<Route path="/new-peg">
+							<NewPEG />
 						</Route>
 						<Route path="/my-profile">
 							<UserProfile />

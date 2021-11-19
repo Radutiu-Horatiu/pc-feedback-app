@@ -2,7 +2,7 @@ import { Flex } from "@chakra-ui/react";
 import { Text } from "@chakra-ui/layout";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { userActions } from "../../store/user/user-slice";
+import { userActions } from "../store/user/user-slice";
 import {
     FormControl,
     FormLabel,
@@ -10,14 +10,11 @@ import {
     Input,
     FormHelperText,
 } from "@chakra-ui/react"
-import { auth } from "../../firebase";
+import { auth } from "../firebase";
 
 export default function NewPEG() {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user);
-    useEffect(() => {
-        dispatch(userActions.setUsername({ username: "Dummy rname" }));
-    }, [dispatch, user]);
 
     return (
         <Flex flexDir="column" w="60vh">
