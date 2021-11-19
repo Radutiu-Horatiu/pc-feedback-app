@@ -7,7 +7,7 @@ const initialState = {
     role: "No Role",
     fiscalYear: 0,
     personalNumber: "01",
-    careerLevel: "SefPeSerpi",
+    careerLevel: "SefPeSomes",
     organizationalAssignment: "None",
 }
 
