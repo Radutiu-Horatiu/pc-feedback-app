@@ -18,14 +18,10 @@ import {
 
 export default function Navbar() {
   const dispatch = useDispatch();
-  const username = useSelector((state) => state.user.username);
+  const username = useSelector((state) => state?.user?.username);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
-
-  useEffect(() => {
-    dispatch(userActions.setUsername({ username: "Dummy rname" }));
-  }, [dispatch, username]);
   return (
     <>
       <Flex w="15vw" backgroundColor="teal.500">

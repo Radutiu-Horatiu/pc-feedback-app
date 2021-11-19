@@ -6,18 +6,20 @@ import { FormControl, FormLabel, Input, Grid, Box } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
 import { signInWithEmailAndPassword } from "@firebase/auth";
 import { auth } from "../../firebase";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { userActions } from "../../store/user/user-slice";
+import { useHistory } from "react-router";
 
 export default function LoginScreen() {
+    const history = useHistory();
 	const dispatch = useDispatch();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const userEmail = useSelector((state) => state.user.email);
 	const login = () => {
 		signInWithEmailAndPassword(auth, email, password)
 			.then((userCredentials) => {
-				dispatch(userActions.setEmail({ email: userCredentials.user.email }));
+				dispatch(userActions.setEmail({ email: userCredentials?.user?.email }));
+                history.push("/");
 			})
 			.catch((e) => {
 				console.log(e);
@@ -58,7 +60,6 @@ export default function LoginScreen() {
 						</Button>
 					</FormControl>
 				</Box>
-				<Text>{userEmail}</Text>
 			</Grid>
 		</Flex>
 	);

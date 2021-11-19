@@ -3,7 +3,7 @@ import React from "react";
 import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption } from "@chakra-ui/react";
 export default function RequestPeg() {
 	return (
-		<Flex justifyContent="center">
+		<Flex>
 			<Table variant="simple">
 				<TableCaption>PEG REQUESTS</TableCaption>
 				<Thead>

@@ -2,14 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 import { login, logout, register } from "./utils";
 
 const initialState = {
-	email: "arekkusu.poppu@gmail.com",
-	username: "arekkusupoppu",
-	name: "Alex Pop",
-	role: "No Role",
+	email: "",
+	username: "",
+	name: "",
+	role: "",
 	fiscalYear: 0,
-	personalNumber: "01",
-	careerLevel: "SefPeSomes",
-	organizationalAssignment: "None",
+	personalNumber: "",
+	careerLevel: "",
+	organizationalAssignment: "",
 };
 
 const userSlice = createSlice({
@@ -28,9 +28,7 @@ const userSlice = createSlice({
 		register(state, action) {
 			state.email = register(action.payload.email, action.payload.pass);
 		},
-		signOut(state) {
-			state.email = logout();
-		},
+		signOut: (state) => initialState,
 		setName(state, action) {
 			state.name = action.payload.name;
 		},

@@ -10,12 +10,21 @@ import { Button } from "@chakra-ui/button";
 import { FaPlus } from "react-icons/fa";
 import { onAuthStateChanged } from "@firebase/auth";
 import { auth } from "./firebase";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "./store/user/user-slice";
 import RequestPeg from "./screens/RequestPeg/RequestPeg";
 
 function App() {
 	const dispatch = useDispatch();
+	const [loggedIn, setloggedIn] = useState(false);
+	const user = useSelector((state) => state.user);
+
+	React.useEffect(() => {
+    if (!user.email.length)
+			setloggedIn(false);
+		else
+    	setloggedIn(true);
+  }, [user]);
 
 	React.useEffect(() => {
 		// fastapi example
@@ -28,18 +37,17 @@ function App() {
 		// })();
 		onAuthStateChanged(auth, (user) => {
 			if (user) {
-				console.log(user);
 				dispatch(userActions.setEmail({ email: user.email }));
 			}
 		});
 	}, []);
 	return (
 		<Flex h="100vh">
-			<Navbar />
+			{loggedIn && <Navbar />}
 			{/* Right content */}
 			<Flex flexDir="column" w="100%">
 				{/* Buttons */}
-				<Flex w="100%" p="2vh">
+				{loggedIn && <Flex w="100%" p="2vh">
 					<Button w="100%">
 						<FaPlus />
 						<Text ml="1vh">Request new PEG</Text>
@@ -48,7 +56,7 @@ function App() {
 						<FaPlus />
 						<Text ml="1vh">Request new Feedback</Text>
 					</Button>
-				</Flex>
+				</Flex>}
 				{/* Dynamic content screen */}
 				<Flex h="100%" justify="center" align="center">
 					<Switch>
