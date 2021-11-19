@@ -1,5 +1,5 @@
 import "./App.css";
-import React from "react";
+import React, { useState } from "react";
 import HomeScreen from "./screens/HomeScreen/HomeScreen";
 import { Route, Switch } from "react-router";
 import LoginScreen from "./screens/Login/LoginScreen";
@@ -33,7 +33,6 @@ function App() {
 			}
 		});
 	}, []);
-
 	return (
 		<Flex h="100vh">
 			<Navbar />
