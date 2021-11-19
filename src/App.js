@@ -10,7 +10,7 @@ import RegisterScreen from "./screens/Register/RegisterScreen";
 import Navbar from "./screens/HomeScreen/Navbar";
 import { Flex, Text } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/button";
-
+import { FaPlus } from "react-icons/fa";
 function App() {
   React.useEffect(() => {
     // firebase connection example
@@ -36,8 +36,15 @@ function App() {
       {/* Right content */}
       <Flex flexDir="column" w="100%">
         {/* Buttons */}
-        <Flex>
-          <Text>Butoane</Text>
+        <Flex w="100%" p="2vh">
+          <Button w="100%">
+            <FaPlus />
+            <Text ml="1vh">Request new PEG</Text>
+          </Button>
+          <Button w="100%" ml="1vh">
+            <FaPlus />
+            <Text ml="1vh">Request new Feedback</Text>
+          </Button>
         </Flex>
         {/* Dynamic content screen */}
         <Flex h="100%" justify="center" align="center">
