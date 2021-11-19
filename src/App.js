@@ -12,14 +12,22 @@ import { Flex, Text } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/button";
 import { FaPlus } from "react-icons/fa";
 function App() {
-  React.useEffect(() => {
-    // firebase connection example
-    (async () => {
-      await setDoc(doc(db, "test", "test"), {
-        data: "This is a test.",
-      });
-    })();
-
+	React.useEffect(() => {
+		// firebase connection example
+		// (async () => {
+		// 	await setDoc(doc(db, "test", "test"), {
+		// 		data: "This is a test.",
+		// 	});
+		// })();
+		// fastapi example
+		// (async () => {
+		//   const response = await axios.request({
+		//     method: "GET",
+		//     url: "http://127.0.0.1:8000/ceva",
+		//   });
+		//   console.log(response.data);
+		// })();
+	}, []);
     // fastapi example
     (async () => {
       const response = await axios.request({
