@@ -33,7 +33,7 @@ export default function LoginScreen() {
 			});
 	};
 	return (
-		<Flex w="100vw" h="100vh" justify="center" align="center">
+		<Flex justify="center" align="center">
 			<Grid>
 				<Box padding="1">
 					<FormControl id="email" isRequired>
