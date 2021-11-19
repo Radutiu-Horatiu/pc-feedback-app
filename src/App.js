@@ -12,6 +12,7 @@ import { onAuthStateChanged } from "@firebase/auth";
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
 import { userActions } from "./store/user/user-slice";
+import RequestPeg from "./screens/RequestPeg/RequestPeg";
 
 function App() {
 	const dispatch = useDispatch();
@@ -52,6 +53,9 @@ function App() {
 				{/* Dynamic content screen */}
 				<Flex h="100%" justify="center" align="center">
 					<Switch>
+						<Route path="/peg-request">
+							<RequestPeg />
+						</Route>
 						<Route path="/register">
 							<RegisterScreen />
 						</Route>
