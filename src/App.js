@@ -13,6 +13,7 @@ import { auth } from "./firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "./store/user/user-slice";
 import RequestPeg from "./screens/RequestPeg/RequestPeg";
+import UserProfile from "./screens/UserProfile/UserProfile";
 
 function App() {
 	const dispatch = useDispatch();
@@ -62,6 +63,9 @@ function App() {
 					<Switch>
 						<Route path="/peg-request">
 							<RequestPeg />
+						</Route>
+						<Route path="/my-profile">
+							<UserProfile />
 						</Route>
 						<Route path="/register">
 							<RegisterScreen />
