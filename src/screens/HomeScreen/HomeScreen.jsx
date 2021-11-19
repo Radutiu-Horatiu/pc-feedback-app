@@ -8,6 +8,7 @@ import {
   createUserWithEmailAndPassword,
 } from "@firebase/auth";
 import { auth } from "../../firebase";
+import NewPEG from "./NewPEG";
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
@@ -40,8 +41,7 @@ export default function HomeScreen() {
   };
   return (
     <Flex>
-      <Text>{email}</Text>
-      <Text>{username}</Text>
+      <NewPEG></NewPEG>
     </Flex>
   );
 }

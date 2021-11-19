@@ -18,39 +18,38 @@ import {
 
 export default function Navbar() {
   const dispatch = useDispatch();
-  const username = useSelector((state) => state.user.username);
+  const user = useSelector((state) => state.user);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
 
   useEffect(() => {
     dispatch(userActions.setUsername({ username: "Dummy rname" }));
-  }, [dispatch, username]);
+    console.log(user);
+  }, [dispatch, user]);
+
   return (
     <>
-      <Flex w="15vw" backgroundColor="teal.500">
+      <Flex flexDir="column" w="15vw" backgroundColor="teal.500">
         <Text>Nav</Text>
+        <Button justifyContent="flex-start" variant="ghost">
+          <Text>My Profile</Text>
+        </Button>
+        <Button justifyContent="flex-start" variant="ghost">
+          <Text>My Requests</Text>
+        </Button>
+        { user?.role === "Manager" && 
+          <Button justifyContent="flex-start" variant="ghost">
+            <Text>My Team</Text>
+          </Button>
+        }
+        <Button justifyContent="flex-start" variant="ghost">
+          <Text>All PEGs</Text>
+        </Button>
+        <Button justifyContent="flex-start" variant="ghost">
+          <Text>All Feedbacks</Text>
+        </Button>
       </Flex>
-      {/* <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
-        Menu
-      </Button>
-      <Drawer
-        isOpen={isOpen}
-        placement="left"
-        onClose={onClose}
-        finalFocusRef={btnRef}
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>Section</DrawerHeader>
-
-          <DrawerBody>
-            <p>Content</p>
-            <p>Content</p>
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer> */}
     </>
   );
 }
