@@ -28,7 +28,7 @@ export default function Navbar() {
   }, [dispatch, username]);
   return (
     <>
-      <Flex w="15vw" h="100vw" backgroundColor="teal.500">
+      <Flex w="15vw" backgroundColor="teal.500">
         <Text>Nav</Text>
       </Flex>
       {/* <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>

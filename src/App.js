@@ -9,6 +9,7 @@ import LoginScreen from "./screens/Login/LoginScreen";
 import RegisterScreen from "./screens/Register/RegisterScreen";
 import Navbar from "./screens/HomeScreen/Navbar";
 import { Flex, Text } from "@chakra-ui/layout";
+import { Button } from "@chakra-ui/button";
 
 function App() {
   React.useEffect(() => {
@@ -30,16 +31,16 @@ function App() {
   }, []);
 
   return (
-    <Flex>
+    <Flex h="100vh">
       <Navbar />
       {/* Right content */}
-      <Flex flexDir="column">
+      <Flex flexDir="column" w="100%">
         {/* Buttons */}
         <Flex>
           <Text>Butoane</Text>
         </Flex>
         {/* Dynamic content screen */}
-        <Flex>
+        <Flex h="100%" justify="center" align="center">
           <Switch>
             <Route path="/register">
               <RegisterScreen />
