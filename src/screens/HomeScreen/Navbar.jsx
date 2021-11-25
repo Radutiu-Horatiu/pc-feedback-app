@@ -2,55 +2,77 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../store/user/user-slice";
 import { Flex } from "@chakra-ui/react";
-import { Text } from "@chakra-ui/layout";
-import {
-  Button,
-  Drawer,
-  DrawerOverlay,
-  DrawerCloseButton,
-  DrawerContent,
-  DrawerFooter,
-  Input,
-  DrawerHeader,
-  DrawerBody,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Heading, Text } from "@chakra-ui/layout";
+import { Button } from "@chakra-ui/react";
+import { useHistory } from "react-router";
+import { logout } from "../../store/user/utils";
 
 export default function Navbar() {
   const dispatch = useDispatch();
-  const username = useSelector((state) => state.user.username);
+  const history = useHistory();
+  const user = useSelector((state) => state.user);
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = React.useRef();
+  const logUserOut = () => {
+    logout();
+    dispatch(userActions.signOut());
+    history.push("/login");
+  };
 
-  useEffect(() => {
-    dispatch(userActions.setUsername({ username: "Dummy rname" }));
-  }, [dispatch, username]);
   return (
-    <>
-      <Flex w="15vw" h="100vw" backgroundColor="teal.500">
-        <Text>Nav</Text>
+    <Flex
+      flexDir="column"
+      w="15vw"
+      backgroundColor="teal.500"
+      justify="space-between"
+      p='1vh'
+    >
+      {/* Up */}
+      <Flex flexDir="column">
+        <Heading size="l">PC-Feedback-App</Heading>
+        <Button
+          justifyContent="flex-start"
+          variant="ghost"
+          onClick={() => history.push("/")}
+        >
+          <Text>Home</Text>
+        </Button>
+        <Button
+          justifyContent="flex-start"
+          variant="ghost"
+          onClick={() => history.push("/my-profile")}
+        >
+          <Text>My Profile</Text>
+        </Button>
+        <Button justifyContent="flex-start" variant="ghost">
+          <Text>My Requests</Text>
+        </Button>
+        {user?.role === "Manager" && (
+          <Button justifyContent="flex-start" variant="ghost">
+            <Text>My Team</Text>
+          </Button>
+        )}
+        <Button
+          justifyContent="flex-start"
+          variant="ghost"
+          onClick={() => history.push("/peg-requests")}
+        >
+          <Text>All PEGs</Text>
+        </Button>
+        <Button justifyContent="flex-start" variant="ghost">
+          <Text>All Feedbacks</Text>
+        </Button>
       </Flex>
-      {/* <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
-        Menu
-      </Button>
-      <Drawer
-        isOpen={isOpen}
-        placement="left"
-        onClose={onClose}
-        finalFocusRef={btnRef}
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>Section</DrawerHeader>
 
-          <DrawerBody>
-            <p>Content</p>
-            <p>Content</p>
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer> */}
-    </>
+      {/* Down */}
+      <Flex flexDir="column">
+        <Button
+          justifyContent="flex-start"
+          variant="ghost"
+          onClick={logUserOut}
+        >
+          <Text>Log out</Text>
+        </Button>
+      </Flex>
+    </Flex>
   );
 }

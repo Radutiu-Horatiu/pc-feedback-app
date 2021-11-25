@@ -17,23 +17,24 @@ export default function UserProfile() {
     const personalNumber = useSelector(state => state.user.personalNumber);
     const careerLevel = useSelector(state => state.user.careerLevel);
     const organizationalAssignments = useSelector(state => state.user.organizationalAssignments);
-
-    /**useEffect(() => {
-        dispatch(userActions.setUsername({username: "Arekkusu Poppu"}));
-        
-    }, [dispatch, username]);**/
     return (
-        <Flex w="100vw" h="100vh" justify="center" align="center">
-            <Grid templateColumns="repeat(2, 1fr)" gap={6}>
-                <FormControl id="Email" isDisabled={true} padding="3">
-                    <FormLabel>Email: </FormLabel>
-                    <Input type="Email" style={{ width: "370px" }} />
-                </FormControl>
-                <FormControl id="Username" isDisabled={true} padding="3">
-                    <FormLabel>Username: </FormLabel>
-                    <Input type="Username" style={{ width: "370px" }} />
-                </FormControl>
+    <Flex flexDirection="column" justify="left" align="left">
 
+        <FormControl id="Email" isDisabled={true} padding="3">
+            <FormLabel>Email: </FormLabel>
+            <Input type="Email" style={{width: "370px"}} />
+        </FormControl>
+
+        <FormControl id="Username" isDisabled={true} padding="3">
+            <FormLabel>Username: </FormLabel>
+            <Input type="Username" style={{width: "370px"}} />
+        </FormControl>
+
+        <FormControl id="Name" isDisabled={false} padding="3">
+            <FormLabel>Full Name: </FormLabel>
+            <Input type="Name" style={{width: "370px"}} />
+            <FormHelperText>Enter your first and last Name</FormHelperText >
+        </FormControl>
                 <FormControl id="Name" isDisabled={false} padding="3">
                     <FormLabel>Full Name: </FormLabel>
                     <Input type="Name" style={{ width: "370px" }} />
