@@ -6,8 +6,11 @@ import { createUserWithEmailAndPassword } from "@firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../store/user/user-slice";
 import { auth } from "../../firebase";
+import { useHistory } from "react-router";
+import { Text } from "@chakra-ui/layout";
 
 export default function RegisterScreen() {
+	const history = useHistory();
 	const dispatch = useDispatch();
 	const [email, setEmail] = useState("");
 	const [name, setName] = useState("");
@@ -77,6 +80,14 @@ export default function RegisterScreen() {
 					<FormControl>
 						<Button onClick={register} colorScheme="teal" disabled={(password != passwordVerify) | (password.length == 0) | (passwordVerify.length == 0)}>
 							Register
+						</Button>
+					</FormControl>
+				</Box>
+				<Box align="center">
+					<Text padding="5"><strong>Already have an account? Please log in!</strong></Text>
+					<FormControl>
+						<Button colorScheme="teal" onClick={() => history.push("/login")}>
+							Log In
 						</Button>
 					</FormControl>
 				</Box>
