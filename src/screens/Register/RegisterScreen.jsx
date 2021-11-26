@@ -21,6 +21,7 @@ export default function RegisterScreen() {
 			.then((userCredentials) => {
 				dispatch(userActions.setEmail({ email: userCredentials.user.email }));
 				dispatch(userActions.setName({ name: name }));
+				history.push("/");
 			})
 			.catch((e) => {
 				console.log(e);
