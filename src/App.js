@@ -15,7 +15,7 @@ import { userActions } from "./store/user/user-slice";
 import RequestPeg from "./screens/RequestPeg/RequestPeg";
 import NewPEG from "./screens/NewPEG";
 import UserProfile from "./screens/UserProfile/UserProfile";
-import Feedbacks from "./screens/Feedbacks/RequestPeg";
+import Feedbacks from "./screens/Feedbacks/Feedbacks";
 
 function App() {
 	const dispatch = useDispatch();
