@@ -1,76 +1,71 @@
-import { Flex } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption } from "@chakra-ui/react";
+import { Flex, Heading, Text, Box } from "@chakra-ui/react";
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+} from "@chakra-ui/accordion";
+import axios from "axios";
+import React, { useState } from "react";
+import { API } from "../../utils/API";
+
 export default function Feedbacks() {
-	const [pegs, setpegs] = useState(null);
-	useEffect(() => {
-		fetch("http://127.0.0.1:8000/allPegs/")
-			.then((response) => response.json())
-			.then((data) => {
-				console.log(data);
-				setpegs(data);
-			});
-	}, []);
-	const refresh = () => {
-		console.log("refresh");
-	};
-	return (
-		<Flex>
-			<Table variant="simple">
-				<TableCaption>PEG REQUESTS</TableCaption>
-				<Thead>
-					<Tr>
-						<Th isNumeric>Criteria</Th>
-						<Th>Customer name</Th>
-						<Th>Date of PEG</Th>
-						<Th>Evaluator Name</Th>
-						<Th isNumeric>Fiscal year</Th>
-						<Th>Manager name</Th>
-						<Th isNumeric>No. of days evaluated</Th>
-						<Th isNumeric>Personal Number</Th>
-						<Th>Project id</Th>
-						<Th>Project name</Th>
-						<Th>Status</Th>
-						<Th>User id</Th>
-					</Tr>
-				</Thead>
-				<Tbody>
-					{pegs?.map((peg) => {
-						return (
-							<Tr>
-								<Td isNumeric>{peg["Criteria"]}</Td>
-								<Td>{peg["Customer name"]}</Td>
-								<Td>{new Date(peg["Date of PEG"]).toLocaleDateString("en-US")}</Td>
-								<Td>{peg["Evaluator name"]}</Td>
-								<Td>{peg["Fiscal year"]}</Td>
-								<Td>{peg["Manager name"]}</Td>
-								<Td>{peg["Number of project days evaluated"]}</Td>
-								<Td>{peg["Personal Number"]}</Td>
-								<Td>{peg["Project id"]}</Td>
-								<Td>{peg["Project name"]}</Td>
-								<Td>{peg["Status"]}</Td>
-								<Td>{peg["User id"]}</Td>
-							</Tr>
-						);
-					})}
-				</Tbody>
-				<Tfoot>
-					<Tr>
-						<Th isNumeric>Criteria</Th>
-						<Th>Customer name</Th>
-						<Th>Date of PEG</Th>
-						<Th>Evaluator Name</Th>
-						<Th isNumeric>Fiscal year</Th>
-						<Th>Manager name</Th>
-						<Th isNumeric>No. of days evaluated</Th>
-						<Th isNumeric>Personal Number</Th>
-						<Th>Project id</Th>
-						<Th>Project name</Th>
-						<Th>Status</Th>
-						<Th>User id</Th>
-					</Tr>
-				</Tfoot>
-			</Table>
-		</Flex>
-	);
+  const [feedbacks, setFeedbacks] = useState([]);
+
+  React.useEffect(() => {
+    (async () => {
+      const response = await axios.request({
+        method: "GET",
+        url: API.backend + "getAllFeedback",
+      });
+
+      setFeedbacks(response.data);
+    })();
+  }, []);
+
+  return (
+    <Flex flexDir="column" w="80vw">
+      <Heading>All Feedbacks</Heading>
+      <Accordion allowToggle mt="1vh">
+        {feedbacks.map((obj, i) => (
+          <AccordionItem key={i}>
+            <AccordionButton>
+              <Flex flex="1" textAlign="left">
+                <Flex alignItems="space-between" w="100%">
+                  <Text fontWeight="bold">#{i}</Text>
+                  <Text ml="1vh">{obj.project_id}</Text>
+                  <Text ml="1vh">
+                    {new Date(obj.timestamp).toLocaleTimeString("en-US")}
+                  </Text>
+                  {!obj.anonym && (
+                    <>
+                      <Text ml="1vh">From: {obj.from_user_id}</Text>
+                      <Text ml="1vh">To: {obj.to_user_id}</Text>
+                    </>
+                  )}
+                </Flex>
+                <Flex>
+                  <Text
+                    textTransform="capitalize"
+                    mr="1vh"
+                    fontWeight="bold"
+                    color={obj.status === "sent" ? "teal.200" : "teal.600"}
+                  >
+                    {obj.status}
+                  </Text>
+                </Flex>
+              </Flex>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+              <Text color={!obj.text && "teal.600"}>
+                {obj.text ? obj.text : "Feedback not received yet."}
+              </Text>
+            </AccordionPanel>
+          </AccordionItem>
+        ))}
+      </Accordion>
+    </Flex>
+  );
 }

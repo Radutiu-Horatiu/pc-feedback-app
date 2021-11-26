@@ -6,6 +6,8 @@ import { useSelector } from "react-redux";
 import { FormControl, FormLabel, Select } from "@chakra-ui/react";
 import { FaPaperPlane } from "react-icons/fa";
 import { useToast } from "@chakra-ui/react";
+import axios from "axios";
+import { API } from "../../utils/API";
 
 export default function NewPEG() {
   const toast = useToast();
@@ -45,14 +47,24 @@ export default function NewPEG() {
     }
 
     const myFeedback = {
-      fromUserId: user.email,
-      toUserId: userRef.current.value,
-      projectId: projectRef.current.value,
+      from_user_id: user.email,
+      to_user_id: userRef.current.value,
+      status: "sent",
+      project_id: projectRef.current.value,
       anonym: isAnonym,
       category: categoryValue,
     };
 
-    console.log(myFeedback);
+    await axios.request({
+      method: "POST",
+      url: API.backend + "addFeedback",
+      data: myFeedback,
+    });
+
+    userRef.current.value = "";
+    projectRef.current.value = "";
+    setcategoryValue(null);
+    setIsAnonym(false);
 
     toast({
       title: "Success.",
@@ -91,7 +103,7 @@ export default function NewPEG() {
       <FormControl id="Anonimity" padding="3">
         <FormLabel>Anonym: </FormLabel>
         <Checkbox value={isAnonym} onChange={() => setIsAnonym(!isAnonym)}>
-          Send anonymous feedback
+          Anonymous feedback
         </Checkbox>
       </FormControl>
 
