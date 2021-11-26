@@ -16,6 +16,7 @@ import RequestPeg from "./screens/RequestPeg/RequestPeg";
 import RequestNewFeedback from "./screens/RequestNewFeedback/RequestNewFeedback";
 import NewPEG from "./screens/NewPEG";
 import UserProfile from "./screens/UserProfile/UserProfile";
+import Feedbacks from "./screens/Feedbacks/Feedbacks";
 
 function App() {
 	const dispatch = useDispatch();
@@ -24,11 +25,9 @@ function App() {
 	const user = useSelector((state) => state.user);
 
 	React.useEffect(() => {
-    if (!user.email.length)
-			setloggedIn(false);
-		else
-    	setloggedIn(true);
-  }, [user]);
+		if (!user.email.length) setloggedIn(false);
+		else setloggedIn(true);
+	}, [user]);
 
 	React.useEffect(() => {
 		onAuthStateChanged(auth, (user) => {
@@ -56,6 +55,9 @@ function App() {
 				{/* Dynamic content screen */}
 				<Flex h="100%" justify="center" align="center">
 					<Switch>
+						<Route path="/feedbacks">
+							<Feedbacks />
+						</Route>
 						<Route path="/peg-requests">
 							<RequestPeg />
 						</Route>

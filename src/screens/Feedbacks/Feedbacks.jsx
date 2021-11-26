@@ -1,7 +1,7 @@
 import { Flex } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption } from "@chakra-ui/react";
-export default function RequestPeg() {
+export default function Feedbacks() {
 	const [pegs, setpegs] = useState(null);
 	useEffect(() => {
 		fetch("http://127.0.0.1:8000/allPegs/")
