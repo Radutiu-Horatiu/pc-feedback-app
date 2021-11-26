@@ -15,6 +15,7 @@ import { userActions } from "./store/user/user-slice";
 import RequestPeg from "./screens/RequestPeg/RequestPeg";
 import NewPEG from "./screens/NewPEG";
 import UserProfile from "./screens/UserProfile/UserProfile";
+import Feedbacks from "./screens/Feedbacks/RequestPeg";
 
 function App() {
 	const dispatch = useDispatch();
@@ -23,11 +24,9 @@ function App() {
 	const user = useSelector((state) => state.user);
 
 	React.useEffect(() => {
-    if (!user.email.length)
-			setloggedIn(false);
-		else
-    	setloggedIn(true);
-  }, [user]);
+		if (!user.email.length) setloggedIn(false);
+		else setloggedIn(true);
+	}, [user]);
 
 	React.useEffect(() => {
 		// fastapi example
@@ -50,19 +49,24 @@ function App() {
 			{/* Right content */}
 			<Flex flexDir="column" w="100%">
 				{/* Buttons */}
-				{loggedIn && <Flex w="100%" p="2vh">
-					<Button w="100%" onClick={() => history.push("/new-peg")}>
-						<FaPlus />
-						<Text ml="1vh">Request new PEG</Text>
-					</Button>
-					<Button w="100%" ml="1vh">
-						<FaPlus />
-						<Text ml="1vh">Request new Feedback</Text>
-					</Button>
-				</Flex>}
+				{loggedIn && (
+					<Flex w="100%" p="2vh">
+						<Button w="100%" onClick={() => history.push("/new-peg")}>
+							<FaPlus />
+							<Text ml="1vh">Request new PEG</Text>
+						</Button>
+						<Button w="100%" ml="1vh">
+							<FaPlus />
+							<Text ml="1vh">Request new Feedback</Text>
+						</Button>
+					</Flex>
+				)}
 				{/* Dynamic content screen */}
 				<Flex h="100%" justify="center" align="center">
 					<Switch>
+						<Route path="/feedbacks">
+							<Feedbacks />
+						</Route>
 						<Route path="/peg-requests">
 							<RequestPeg />
 						</Route>
