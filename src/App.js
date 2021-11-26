@@ -13,6 +13,7 @@ import { auth } from "./firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "./store/user/user-slice";
 import RequestPeg from "./screens/RequestPeg/RequestPeg";
+import RequestNewFeedback from "./screens/RequestNewFeedback/RequestNewFeedback";
 import NewPEG from "./screens/NewPEG";
 import UserProfile from "./screens/UserProfile/UserProfile";
 import Feedbacks from "./screens/Feedbacks/Feedbacks";
@@ -29,14 +30,6 @@ function App() {
 	}, [user]);
 
 	React.useEffect(() => {
-		// fastapi example
-		// (async () => {
-		//   const response = await axios.request({
-		//     method: "GET",
-		//     url: "http://127.0.0.1:8000/ceva",
-		//   });
-		//   console.log(response.data);
-		// })();
 		onAuthStateChanged(auth, (user) => {
 			if (user) {
 				dispatch(userActions.setEmail({ email: user.email }));
@@ -49,18 +42,16 @@ function App() {
 			{/* Right content */}
 			<Flex flexDir="column" w="100%">
 				{/* Buttons */}
-				{loggedIn && (
-					<Flex w="100%" p="2vh">
-						<Button w="100%" onClick={() => history.push("/new-peg")}>
-							<FaPlus />
-							<Text ml="1vh">Request new PEG</Text>
-						</Button>
-						<Button w="100%" ml="1vh">
-							<FaPlus />
-							<Text ml="1vh">Request new Feedback</Text>
-						</Button>
-					</Flex>
-				)}
+				{loggedIn && <Flex w="100%" p="2vh">
+					<Button w="100%" onClick={() => history.push("/new-peg")}>
+						<FaPlus />
+						<Text ml="1vh">Request new PEG</Text>
+					</Button>
+					<Button w="100%" ml="1vh" onClick={() => history.push("/new-feedback")}>
+						<FaPlus />
+						<Text ml="1vh">Request new Feedback</Text>
+					</Button>
+				</Flex>}
 				{/* Dynamic content screen */}
 				<Flex h="100%" justify="center" align="center">
 					<Switch>
@@ -72,6 +63,9 @@ function App() {
 						</Route>
 						<Route path="/new-peg">
 							<NewPEG />
+						</Route>
+						<Route path="/new-feedback">
+							<RequestNewFeedback />
 						</Route>
 						<Route path="/my-profile">
 							<UserProfile />

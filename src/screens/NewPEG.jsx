@@ -1,5 +1,5 @@
 import { Flex } from "@chakra-ui/react";
-import { Text } from "@chakra-ui/layout";
+import { Heading, Text } from "@chakra-ui/layout";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../store/user/user-slice";
@@ -18,6 +18,7 @@ export default function NewPEG() {
 
     return (
         <Flex flexDir="column" w="60vh">
+            <Heading>Request new PEG</Heading>
             <FormControl id="employee-name" isDisabled>
                 <FormLabel>Employee name</FormLabel>
                 <Input type="text" />
