@@ -17,6 +17,7 @@ import RequestNewFeedback from "./screens/RequestNewFeedback/RequestNewFeedback"
 import NewPEG from "./screens/NewPEG";
 import UserProfile from "./screens/UserProfile/UserProfile";
 import Feedbacks from "./screens/Feedbacks/Feedbacks";
+import MyRequests from "./screens/MyRequests/MyRequests";
 
 function App() {
 	const dispatch = useDispatch();
@@ -57,6 +58,9 @@ function App() {
 					<Switch>
 						<Route path="/feedbacks">
 							<Feedbacks />
+						</Route>
+						<Route path="/my-requests">
+							<MyRequests />
 						</Route>
 						<Route path="/peg-requests">
 							<RequestPeg />

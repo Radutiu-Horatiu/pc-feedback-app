@@ -25,7 +25,7 @@ export default function Feedbacks() {
   }, []);
 
   return (
-    <Flex flexDir="column" w="80vw">
+    <Flex flexDir="column" h="90vh" overflowY="scroll" w="80vw">
       <Heading>All Feedbacks</Heading>
       <Accordion allowToggle mt="1vh">
         {feedbacks.map((obj, i) => (
