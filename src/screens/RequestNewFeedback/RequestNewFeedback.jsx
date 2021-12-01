@@ -27,8 +27,16 @@ export default function NewPEG() {
 
   // load initial data
   React.useEffect(() => {
+    (async () => {
+      const response = await axios.request({
+        method: "GET",
+        url: API.backend + "getAllUsers",
+      });
+
+      setUsers(response.data);
+    })();
+
     setCategories(["category1", "category2", "category3"]);
-    setUsers(["User1", "User2"]);
     setProjects(["Project1", "Project2"]);
   }, []);
 
@@ -84,7 +92,7 @@ export default function NewPEG() {
         <FormLabel>Choose user: </FormLabel>
         <Select placeholder="User" ref={userRef}>
           {users.map((obj, i) => (
-            <option key={i}>{obj}</option>
+            <option key={i}>{obj.email}</option>
           ))}
         </Select>
       </FormControl>
