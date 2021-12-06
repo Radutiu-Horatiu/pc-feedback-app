@@ -36,7 +36,7 @@ export default function Feedbacks() {
                   <Text fontWeight="bold">#{i}</Text>
                   <Text ml="1vh">{obj.project_id}</Text>
                   <Text ml="1vh">
-                    {new Date(obj.timestamp).toLocaleTimeString("en-US")}
+                    {new Date(obj.timestamp).toLocaleString("en-US")}
                   </Text>
                   {!obj.anonym && (
                     <>

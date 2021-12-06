@@ -138,7 +138,7 @@ export default function NewPEG() {
             <Text>From user: {obj.from_user_id}</Text>
             <Text>Project ID: {obj.project_id}</Text>
             <Text>
-              Date: {new Date(obj.timestamp).toLocaleTimeString("en-US")}
+              Date: {new Date(obj.timestamp).toLocaleString("en-US")}
             </Text>
             <Flex borderTopWidth={1} w={"100%"} my="1vh"></Flex>
             <Text fontWeight="bold">Resolve feedback</Text>
