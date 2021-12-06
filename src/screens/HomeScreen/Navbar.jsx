@@ -1,14 +1,25 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../store/user/user-slice";
 import { useColorMode } from "@chakra-ui/color-mode";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Image } from "@chakra-ui/react";
 import { Heading, Text } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/react";
 import { useHistory } from "react-router";
 import { useColorModeValue } from "@chakra-ui/color-mode";
 import { logout } from "../../store/user/utils";
-import { FaCheck, FaHome, FaList, FaMoon, FaSignOutAlt, FaSun, FaUser } from "react-icons/fa";
+import {
+  FaCheck,
+  FaHome,
+  FaList,
+  FaMoon,
+  FaSignOutAlt,
+  FaSun,
+  FaUserAlt,
+  FaUserCircle,
+} from "react-icons/fa";
+import LOGO_LIGHT from "../../assets/feedback_light.png";
+import LOGO_DARK from "../../assets/feedback_dark.png";
 
 export default function Navbar() {
   const dispatch = useDispatch();
@@ -26,16 +37,23 @@ export default function Navbar() {
   return (
     <Flex
       flexDir="column"
-      w="15vw"
-      backgroundColor={useColorModeValue("teal.200", "teal.500")}
+      w="35vh"
+      backgroundColor={useColorModeValue("gray.200", "gray.700")}
       justify="space-between"
       p="1vh"
     >
       {/* Up */}
       <Flex flexDir="column">
-        <Heading fontSize="3vh" mb="4vh">
-          My-Backfeed
-        </Heading>
+        <Flex align="center" mb="3vh">
+          <Image
+            src={colorMode === "light" ? LOGO_DARK : LOGO_LIGHT}
+            w="5vh"
+            h="5vh"
+          />
+          <Heading fontSize="3vh" ml="1vh">
+            My-Backfeed
+          </Heading>
+        </Flex>
         <Button
           justifyContent="flex-start"
           variant="ghost"
@@ -49,7 +67,7 @@ export default function Navbar() {
           justifyContent="flex-start"
           variant="ghost"
           onClick={() => history.push("/my-profile")}
-          leftIcon={<FaUser />}
+          leftIcon={<FaUserAlt />}
           my="1vh"
         >
           <Text>My Profile</Text>
@@ -90,6 +108,15 @@ export default function Navbar() {
 
       {/* Down */}
       <Flex flexDir="column">
+        <Button
+          justifyContent="flex-start"
+          variant="ghost"
+          my="1vh"
+          _readOnly
+          leftIcon={<FaUserCircle />}
+        >
+          <Text>{user.name}</Text>
+        </Button>
         <Button
           justifyContent="flex-start"
           variant="ghost"

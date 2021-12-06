@@ -21,9 +21,9 @@ export default function HomeScreen() {
   return (
     <Flex flexDir="column">
       {/* User welcome */}
-      <Heading>Welcome,</Heading>
+      <Heading>Welcome to My-Backfeed,</Heading>
       <Heading size="3xl" color="teal.400">
-        {user.email}
+        {user.name}
       </Heading>
 
       {/* Stats */}
@@ -35,7 +35,7 @@ export default function HomeScreen() {
         borderTopWidth={1}
         flexDir="column"
       >
-        <Heading>App stats</Heading>
+        <Heading>Stats</Heading>
         <Flex justify="space-evenly" w="100%" mt="1vh">
           {/* Total feedback requests */}
           {stats.map((obj, i) => (

@@ -92,11 +92,13 @@ export default function NewPEG() {
           <Flex
             flexDir="column"
             w="30vw"
-            bgColor="teal.800"
+            bgColor="teal.700"
             p="5vh"
             borderRadius={5}
           >
-            <Text>Write your feedback</Text>
+            <Text color="white" fontWeight="bold">
+              Write your feedback
+            </Text>
             <Textarea
               mt="1vh"
               placeholder="Hello there.."
@@ -133,15 +135,13 @@ export default function NewPEG() {
             flexDir="column"
             my="1vh"
           >
-            <Text fontWeight="bold">#{i}</Text>
+            <Text fontWeight="bold" color="teal.500">#{i} Request</Text>
             <Text>Category: {obj.category}</Text>
             <Text>From user: {obj.from_user_id}</Text>
             <Text>Project ID: {obj.project_id}</Text>
-            <Text>
-              Date: {new Date(obj.timestamp).toLocaleString("en-US")}
-            </Text>
+            <Text>Date: {new Date(obj.timestamp).toLocaleString("en-US")}</Text>
             <Flex borderTopWidth={1} w={"100%"} my="1vh"></Flex>
-            <Text fontWeight="bold">Resolve feedback</Text>
+            <Text fontWeight="bold">Resolve request</Text>
             <Button mt="1vh" onClick={() => setOpenFeedback(obj.uid)}>
               Complete
             </Button>

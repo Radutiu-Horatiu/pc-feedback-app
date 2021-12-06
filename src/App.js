@@ -19,6 +19,8 @@ import UserProfile from "./screens/UserProfile/UserProfile";
 import Feedbacks from "./screens/Feedbacks/Feedbacks";
 import MyRequests from "./screens/MyRequests/MyRequests";
 import LandingPage from "./screens/LandingPage/LandingPage";
+import { API } from "./utils/API";
+import axios from "axios";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,10 +36,17 @@ function App() {
   React.useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        dispatch(userActions.setEmail({ email: user.email }));
+        (async () => {
+          const response = await axios.request({
+            method: "GET",
+            url: API.backend + "getUser?id=" + user.uid,
+          });
+          const myUser = response.data;
+          if (myUser) dispatch(userActions.setUser(myUser));
+        })();
       }
     });
-  }, []);
+  }, [dispatch]);
   return (
     <Flex h="100vh">
       {loggedIn && <Navbar />}

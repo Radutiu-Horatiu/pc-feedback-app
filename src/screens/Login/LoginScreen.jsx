@@ -2,20 +2,21 @@ import { Flex } from "@chakra-ui/react";
 import { Heading, Text } from "@chakra-ui/layout";
 
 import React, { useState } from "react";
-import { FormControl, FormLabel, Input, Grid, Box } from "@chakra-ui/react";
+import { FormControl, FormLabel, Input, Box } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
 import { signInWithEmailAndPassword } from "@firebase/auth";
 import { auth } from "../../firebase";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../store/user/user-slice";
 import { useHistory } from "react-router";
-import { useColorModeValue } from "@chakra-ui/color-mode";
+import { useColorMode, useColorModeValue } from "@chakra-ui/color-mode";
 
 export default function LoginScreen() {
   const history = useHistory();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const login = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
@@ -30,7 +31,7 @@ export default function LoginScreen() {
   return (
     <Flex
       justify="center"
-      backgroundColor={useColorModeValue("gray.100", "gray.800")}
+      backgroundColor={useColorModeValue("gray.100", "gray.700")}
       flexDir="column"
       w="30vw"
       p="3vh"

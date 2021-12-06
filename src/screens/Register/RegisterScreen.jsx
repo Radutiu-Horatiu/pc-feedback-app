@@ -51,7 +51,7 @@ export default function RegisterScreen() {
   return (
     <Flex
       justify="center"
-      backgroundColor={useColorModeValue("gray.100", "gray.800")}
+      backgroundColor={useColorModeValue("gray.100", "gray.700")}
       flexDir="column"
       w="30vw"
       p="3vh"

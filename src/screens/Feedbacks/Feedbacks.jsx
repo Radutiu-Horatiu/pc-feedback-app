@@ -1,4 +1,5 @@
-import { Flex, Heading, Text, Box } from "@chakra-ui/react";
+import { Flex, Heading, Text } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/button";
 import {
   Accordion,
   AccordionButton,
@@ -9,9 +10,13 @@ import {
 import axios from "axios";
 import React, { useState } from "react";
 import { API } from "../../utils/API";
+import { useColorMode, useColorModeValue } from "@chakra-ui/color-mode";
+import { FaCheck } from "react-icons/fa";
 
 export default function Feedbacks() {
   const [feedbacks, setFeedbacks] = useState([]);
+
+  const themeBackground = useColorModeValue("gray.200", "gray.700");
 
   React.useEffect(() => {
     (async () => {
@@ -27,34 +32,41 @@ export default function Feedbacks() {
   return (
     <Flex flexDir="column" h="90vh" overflowY="scroll" w="80vw">
       <Heading>All Feedbacks</Heading>
-      <Accordion allowToggle mt="1vh">
+      <Accordion allowToggle mt="1vh" px="1vh">
         {feedbacks.map((obj, i) => (
-          <AccordionItem key={i}>
-            <AccordionButton>
-              <Flex flex="1" textAlign="left">
-                <Flex alignItems="space-between" w="100%">
-                  <Text fontWeight="bold">#{i}</Text>
-                  <Text ml="1vh">{obj.project_id}</Text>
-                  <Text ml="1vh">
-                    {new Date(obj.timestamp).toLocaleString("en-US")}
-                  </Text>
-                  {!obj.anonym && (
-                    <>
-                      <Text ml="1vh">From: {obj.from_user_id}</Text>
-                      <Text ml="1vh">To: {obj.to_user_id}</Text>
-                    </>
-                  )}
+          <AccordionItem key={i} border="none">
+            <AccordionButton
+              p="2vh"
+              bg={themeBackground}
+              _hover={themeBackground}
+              borderRadius={20}
+              my="2vh"
+            >
+              <Flex flex="1" textAlign="left" align="center">
+                <Flex w="100%" justify="center" flexDir="column">
+                  <Text fontWeight="bold">#{i} Feedback</Text>
+                  <Text>{obj.project_id}</Text>
+                  <Flex>
+                    {!obj.anonym && (
+                      <>
+                        <Text>Request sent by: {obj.from_user_id}</Text>
+                        <Text ml="1vh">To: {obj.to_user_id}</Text>
+                      </>
+                    )}
+                  </Flex>
+                  <Text fontSize="1.3vh">{new Date(obj.timestamp).toLocaleString("en-US")}</Text>
                 </Flex>
-                <Flex>
-                  <Text
-                    textTransform="capitalize"
-                    mr="1vh"
-                    fontWeight="bold"
-                    color={obj.status === "sent" ? "teal.200" : "teal.600"}
-                  >
-                    {obj.status}
-                  </Text>
-                </Flex>
+                <Button
+                  textTransform="capitalize"
+                  fontWeight="bold"
+                  color={obj.status === "received" ? "teal.200" : "teal.600"}
+                  leftIcon={obj.status === "received" && <FaCheck />}
+                  isLoading={obj.status === "sent" && true}
+                  loadingText={obj.status === "sent" && "Pending"}
+                  mr="2vh"
+                >
+                  {obj.status}
+                </Button>
               </Flex>
               <AccordionIcon />
             </AccordionButton>

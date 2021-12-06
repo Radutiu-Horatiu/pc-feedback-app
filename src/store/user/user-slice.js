@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login, logout, register } from "./utils";
+import { login, register } from "./utils";
 
 const initialState = {
 	email: "",
@@ -16,6 +16,16 @@ const userSlice = createSlice({
 	name: "user",
 	initialState,
 	reducers: {
+		setUser(state, action) {
+			state.username = action.payload.username || "";
+			state.email = action.payload.email || "";
+			state.name = action.payload.name || "";
+			state.role = action.payload.role || "";
+			state.fiscalYear = action.payload.fiscalYear || 0;
+			state.personalNumber = action.payload.personalNumber || "";
+			state.careerLevel = action.payload.careerLevel || "";
+			state.organizationalAssignment = action.payload.organizationalAssignment || "";
+		},
 		setUsername(state, action) {
 			state.username = action.payload.username;
 		},
@@ -28,25 +38,7 @@ const userSlice = createSlice({
 		register(state, action) {
 			state.email = register(action.payload.email, action.payload.pass);
 		},
-		signOut: (state) => initialState,
-		setName(state, action) {
-			state.name = action.payload.name;
-		},
-		setRole(state, action) {
-			state.role = action.payload.role;
-		},
-		setFiscalYear(state, action) {
-			state.fiscalYear = action.payload.fiscalYear;
-		},
-		setPersonalNumber(state, action) {
-			state.personalNumber = action.payload.personalNumber;
-		},
-		setCareerLevel(state, action) {
-			state.careerLevel = action.payload.careerLevel;
-		},
-		setOrganizationalAssignment(state, action) {
-			state.organizationalAssignment = action.payload.organizationalAssignment;
-		},
+		signOut: (state) => initialState
 	},
 });
 export const userActions = userSlice.actions;

@@ -1,5 +1,5 @@
 import { Flex } from "@chakra-ui/react";
-import { Heading, Text } from "@chakra-ui/layout";
+import { Heading } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/button";
 import React from "react";
 import { useHistory } from "react-router";
