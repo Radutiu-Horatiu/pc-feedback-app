@@ -37,8 +37,8 @@ export default function Feedbacks() {
           <AccordionItem key={i} border="none">
             <AccordionButton
               p="2vh"
-              bg={themeBackground}
-              _hover={themeBackground}
+              borderWidth={1}
+              h="11vh"
               borderRadius={20}
               my="2vh"
             >
