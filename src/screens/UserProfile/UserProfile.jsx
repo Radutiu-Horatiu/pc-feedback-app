@@ -52,7 +52,6 @@ export default function UserProfile() {
   const editUser = async () => {
       const myUser = 
       {
-          uid: user.uid,
           email: email,
           username: username,
           name: name,
