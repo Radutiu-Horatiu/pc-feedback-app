@@ -9,7 +9,7 @@ import { auth } from "../../firebase";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../store/user/user-slice";
 import { useHistory } from "react-router";
-import { useColorMode, useColorModeValue } from "@chakra-ui/color-mode";
+import { useColorModeValue } from "@chakra-ui/color-mode";
 
 export default function LoginScreen() {
   const history = useHistory();
