@@ -23,10 +23,10 @@ const userSlice = createSlice({
 			state.email = action.payload.email || "";
 			state.name = action.payload.name || "";
 			state.role = action.payload.role || "";
-			state.fiscalYear = action.payload.fiscalYear || 0;
-			state.personalNumber = action.payload.personalNumber || "";
-			state.careerLevel = action.payload.careerLevel || "";
-			state.organizationalAssignment = action.payload.organizationalAssignment || "";
+			state.fiscalYear = action.payload.fiscal_year || 0;
+			state.personalNumber = action.payload.personal_number || "";
+			state.careerLevel = action.payload.career_level || "";
+			state.organizationalAssignment = action.payload.organisational_assignment || "";
 		},
 		setUsername(state, action) {
 			state.username = action.payload.username;

@@ -34,7 +34,7 @@ export default function UserProfile() {
     setPersonalNumber(user.personalNumber);
     setRole(user.role);
     setOrganizationalAssignment(user.organizationalAssignment);
-  }, []);
+  }, [user]);
   const editUser = async () => {
     const myUser = {
       id: user.uid,
@@ -45,7 +45,7 @@ export default function UserProfile() {
       fiscal_year: fiscalYear,
       personal_number: personalNumber,
       career_level: careerLevel,
-      organisational_assigment: organizationalAssignment,
+      organisational_assignment: organizationalAssignment,
     };
     try {
       await axios.request({
@@ -126,6 +126,7 @@ export default function UserProfile() {
           <Input
             type="PersonalNumber"
             style={{ width: "370px" }}
+            value={personalNumber}
             onChange={(e) => setPersonalNumber(e.target.value)}
           />
         </FormControl>
