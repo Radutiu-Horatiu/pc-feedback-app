@@ -87,14 +87,14 @@ function App() {
                 />
                 <Route path="/my-profile" exact component={UserProfile} />
                 <Route path="/" exact component={HomeScreen} />
-                {/* <Redirect to="/" /> */}
+                <Redirect to="/" />
               </>
             ) : (
               <>
                 <Route path="/register" exact component={RegisterScreen} />
                 <Route path="/login" exact component={LoginScreen} />
                 <Route path="/" exact component={LandingPage} />
-                {/* <Redirect to="/" /> */}
+                <Redirect to="/" />
               </>
             )}
           </Switch>
