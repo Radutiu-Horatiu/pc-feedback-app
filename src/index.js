@@ -6,10 +6,12 @@ import { Provider as ReduxProvider} from "react-redux";
 import store from "./store";
 import reportWebVitals from "./reportWebVitals";
 import { ChakraProvider } from "@chakra-ui/react";
+import { ColorModeScript } from "@chakra-ui/react";
 import { BrowserRouter as Router } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
+    <ColorModeScript />
     <ChakraProvider>
       <ReduxProvider store={store}>
       <Router>
