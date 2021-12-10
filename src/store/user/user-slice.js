@@ -3,6 +3,7 @@ import { login, register } from "./utils";
 
 const initialState = {
 	email: "",
+	uid:"",
 	username: "",
 	name: "",
 	role: "",
@@ -18,6 +19,7 @@ const userSlice = createSlice({
 	reducers: {
 		setUser(state, action) {
 			state.username = action.payload.username || "";
+			state.uid = action.payload.uid || "";
 			state.email = action.payload.email || "";
 			state.name = action.payload.name || "";
 			state.role = action.payload.role || "";

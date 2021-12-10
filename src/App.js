@@ -41,7 +41,7 @@ function App() {
             method: "GET",
             url: API.backend + "getUser?id=" + user.uid,
           });
-          const myUser = response.data;
+          const myUser = { ...response.data, uid: user.uid };
           if (myUser) dispatch(userActions.setUser(myUser));
         })();
       }

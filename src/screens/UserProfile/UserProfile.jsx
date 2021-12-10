@@ -13,10 +13,8 @@ import {
   FormHelperText,
   Input,
 } from "@chakra-ui/react";
-import { auth, db } from "../../firebase";
 export default function UserProfile() {
   const toast = useToast();
-  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
@@ -39,7 +37,7 @@ export default function UserProfile() {
   }, []);
   const editUser = async () => {
     const myUser = {
-      id: "NG7QNDVfDOgAPoJrkAovVwLTGWm2",
+      id: user.uid,
       name: name,
       username: username,
       email: email,
@@ -57,7 +55,7 @@ export default function UserProfile() {
       });
       toast({
         title: "Succes.",
-        description: "Feedback sent.",
+        description: "User updated successfully.",
         status: "success",
         duration: 5000,
         isClosable: true,
