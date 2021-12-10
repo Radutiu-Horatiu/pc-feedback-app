@@ -12,6 +12,7 @@ import {
     FormHelperText,
     Input,
 } from "@chakra-ui/react";
+import { auth, db } from "../../firebase";
 export default function UserProfile() {
     const dispatch = useDispatch();
     const [email, setEmail] = useState("");
@@ -38,14 +39,14 @@ export default function UserProfile() {
         const myUser =
         {
             id: "NG7QNDVfDOgAPoJrkAovVwLTGWm2",
-            email: email,
-            username: username,
             name: name,
+            username: username,
+            email: email,
             role: role,
-            fiscalYear: fiscalYear,
-            organizationalAssignment: organizationalAssignment,
-            careerLevel: careerLevel,
-            personalNumber: personalNumber,
+            fiscal_year: fiscalYear,
+            personal_number: personalNumber,
+            career_level: careerLevel,
+            organisational_assigment: organizationalAssignment,
         }
         console.log(myUser);
         await axios.request({
@@ -56,7 +57,7 @@ export default function UserProfile() {
     }
     return (
         <Flex flexDirection="column" justify="left" align="left">
-            <Grid templateColumns='repeat(2, 1fr)' gap={6}>
+            <Grid templateColumns='repeat(2, 1fr)' gap={3}>
                 <FormControl id="Email" isReadOnly={true} padding="3">
                     <FormLabel>Email: </FormLabel>
                     <Input value={email} onChange={(e) => { setEmail(e.target.value) }} type="Email" style={{ width: "370px" }} />
