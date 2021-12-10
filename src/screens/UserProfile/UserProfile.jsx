@@ -4,6 +4,7 @@ import { Button } from "@chakra-ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { API } from "../../utils/API";
 import axios from "axios";
+import { useToast } from "@chakra-ui/react";
 import { useState } from "react";
 import {
   FormControl,
@@ -14,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { auth, db } from "../../firebase";
 export default function UserProfile() {
+  const toast = useToast();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -30,7 +32,7 @@ export default function UserProfile() {
     setEmail(user.email);
     setUsername(user.username);
     setName(user.name);
-    setFiscalYear(user.fiscalYear);
+    setFiscalYear("2021");
     setPersonalNumber(user.personalNumber);
     setRole(user.role);
     setOrganizationalAssignment(user.organizationalAssignment);
@@ -47,12 +49,30 @@ export default function UserProfile() {
       career_level: careerLevel,
       organisational_assigment: organizationalAssignment,
     };
-    console.log(myUser);
-    await axios.request({
-      method: "POST",
-      url: API.backend + "updateUser",
-      data: myUser,
-    });
+    try {
+      await axios.request({
+        method: "POST",
+        url: API.backend + "updateUser",
+        data: myUser,
+      });
+      toast({
+        title: "Succes.",
+        description: "Feedback sent.",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
+    } catch {
+      toast({
+        title: "Error.",
+        description: "Something went wrong, please try again.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
+    }
   };
   return (
     <Flex flexDirection="column" justify="left" align="left">
@@ -96,12 +116,20 @@ export default function UserProfile() {
 
         <FormControl id="FiscalYear" isReadOnly={true} padding="3">
           <FormLabel>Fiscal Year: </FormLabel>
-          <Input type="FiscalYear" style={{ width: "370px" }} />
+          <Input
+            type="FiscalYear"
+            style={{ width: "370px" }}
+            value={fiscalYear}
+          />
         </FormControl>
 
-        <FormControl id="PersonalNumber" isReadOnly={true} padding="3">
+        <FormControl id="PersonalNumber" padding="3">
           <FormLabel>Personal Number: </FormLabel>
-          <Input type="PersonalNumber" style={{ width: "370px" }} />
+          <Input
+            type="PersonalNumber"
+            style={{ width: "370px" }}
+            onChange={(e) => setPersonalNumber(e.target.value)}
+          />
         </FormControl>
 
         <FormControl id="CareerLevel" padding="3">
