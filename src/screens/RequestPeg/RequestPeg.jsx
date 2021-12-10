@@ -1,8 +1,9 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, Heading, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel } from "@chakra-ui/accordion";
 import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption } from "@chakra-ui/react";
 export default function RequestPeg() {
-	const [pegs, setpegs] = useState(null);
+	const [pegs, setpegs] = useState([]);
 	useEffect(() => {
 		fetch("http://127.0.0.1:8000/allPegs/")
 			.then((response) => response.json())
@@ -14,63 +15,39 @@ export default function RequestPeg() {
 	const refresh = () => {
 		console.log("refresh");
 	};
+
 	return (
-		<Flex>
-			<Table variant="simple">
-				<TableCaption>PEG REQUESTS</TableCaption>
-				<Thead>
-					<Tr>
-						<Th isNumeric>Criteria</Th>
-						<Th>Customer name</Th>
-						<Th>Date of PEG</Th>
-						<Th>Evaluator Name</Th>
-						<Th isNumeric>Fiscal year</Th>
-						<Th>Manager name</Th>
-						<Th isNumeric>No. of days evaluated</Th>
-						<Th isNumeric>Personal Number</Th>
-						<Th>Project id</Th>
-						<Th>Project name</Th>
-						<Th>Status</Th>
-						<Th>User id</Th>
-					</Tr>
-				</Thead>
-				<Tbody>
-					{pegs?.map((peg) => {
-						return (
-							<Tr>
-								<Td isNumeric>{peg["Criteria"]}</Td>
-								<Td>{peg["Customer name"]}</Td>
-								<Td>{new Date(peg["Date of PEG"]).toLocaleDateString("en-US")}</Td>
-								<Td>{peg["Evaluator name"]}</Td>
-								<Td>{peg["Fiscal year"]}</Td>
-								<Td>{peg["Manager name"]}</Td>
-								<Td>{peg["Number of project days evaluated"]}</Td>
-								<Td>{peg["Personal Number"]}</Td>
-								<Td>{peg["Project id"]}</Td>
-								<Td>{peg["Project name"]}</Td>
-								<Td>{peg["Status"]}</Td>
-								<Td>{peg["User id"]}</Td>
-							</Tr>
-						);
-					})}
-				</Tbody>
-				<Tfoot>
-					<Tr>
-						<Th isNumeric>Criteria</Th>
-						<Th>Customer name</Th>
-						<Th>Date of PEG</Th>
-						<Th>Evaluator Name</Th>
-						<Th isNumeric>Fiscal year</Th>
-						<Th>Manager name</Th>
-						<Th isNumeric>No. of days evaluated</Th>
-						<Th isNumeric>Personal Number</Th>
-						<Th>Project id</Th>
-						<Th>Project name</Th>
-						<Th>Status</Th>
-						<Th>User id</Th>
-					</Tr>
-				</Tfoot>
-			</Table>
+		<Flex flexDir="column" h="90vh" overflowY="scroll" w="80vw">
+			<Heading>All PEGs</Heading>
+			<Accordion allowToggle mt="1vh" px="1vh">
+				{pegs.map((peg, i) => (
+					<AccordionItem key={i} border="none">
+						<AccordionButton p="2vh" borderWidth={1} borderRadius={20} my="2vh">
+							<Flex flex="1" textAlign="left" align="center">
+								<Flex w="100%" justify="center" flexDir="column">
+									<Text fontWeight="bold">#{i} PEG</Text>
+									<Text>{peg["Customer name"]}</Text>
+									<Text>{new Date(peg["Date of PEG"]).toLocaleDateString("en-US")}</Text>
+									<Text>{peg["Evaluator name"]}</Text>
+									<Text>{peg["Fiscal year"]}</Text>
+									<Text>{peg["Manager name"]}</Text>
+									<Text>{peg["Number of project days evaluated"]}</Text>
+									<Text>{peg["Personal Number"]}</Text>
+									<Text>{peg["Project id"]}</Text>
+									<Text>{peg["Project name"]}</Text>
+									<Text>{peg["Status"]}</Text>
+									<Text>{peg["User id"]}</Text>
+								</Flex>
+							</Flex>
+							<AccordionIcon />
+						</AccordionButton>
+						<AccordionPanel pb={4}>
+							<Text>{peg["Status"]}</Text>
+							{/* <Text color={!obj.text && "teal.600"}>{obj.text ? obj.text : "Feedback not received yet."}</Text> */}
+						</AccordionPanel>
+					</AccordionItem>
+				))}
+			</Accordion>
 		</Flex>
 	);
 }
