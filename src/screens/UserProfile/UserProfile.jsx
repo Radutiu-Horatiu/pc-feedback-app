@@ -162,15 +162,16 @@ export default function UserProfile() {
         <FormControl id="Role" padding="3">
           <FormLabel>Roles: </FormLabel>
           <Select
-            placeholder="Select Organizational Assignments"
+            placeholder="Select Role"
             style={{ width: "370px" }}
             value={role}
             onChange={(e) => {
               setRole(e.target.value);
             }}
           >
-            <option>Option1</option>
-            <option>Option2</option>
+            <option>User</option>
+            <option>Manager</option>
+            <option>Administrator</option>
           </Select>
         </FormControl>
         <Button

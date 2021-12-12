@@ -21,6 +21,7 @@ import MyRequests from "./screens/MyRequests/MyRequests";
 import LandingPage from "./screens/LandingPage/LandingPage";
 import { API } from "./utils/API";
 import axios from "axios";
+import MyTeamScreen from "./screens/MyTeam/MyTeamScreen";
 
 function App() {
   const dispatch = useDispatch();
@@ -74,6 +75,7 @@ function App() {
           <Switch>
             {loggedIn ? (
               <>
+                <Route path="/my-team" exact component={MyTeamScreen} />
                 <Route path="/feedbacks" exact component={Feedbacks} />
                 <Route path="/my-requests" exact component={MyRequests} />
                 <Route path="/peg-requests" exact component={RequestPeg} />
