@@ -1,11 +1,13 @@
-import { Flex, Grid } from "@chakra-ui/react";
+import { Flex, Grid, Heading } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { Button } from "@chakra-ui/button";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { API } from "../../utils/API";
 import axios from "axios";
 import { useToast } from "@chakra-ui/react";
 import { useState } from "react";
+import { FaCheck } from "react-icons/fa";
+
 import {
   FormControl,
   FormLabel,
@@ -74,8 +76,9 @@ export default function UserProfile() {
   };
   return (
     <Flex flexDirection="column" justify="left" align="left">
-      <Grid templateColumns="repeat(2, 1fr)" gap={3}>
-        <FormControl id="Email" isReadOnly={true} padding="3">
+      <Heading>My Profile</Heading>
+      <Grid templateColumns="repeat(2, 1fr)" gap={3} mt={"3vh"}>
+        <FormControl id="Email" isReadOnly={true}>
           <FormLabel>Email: </FormLabel>
           <Input
             value={email}
@@ -87,7 +90,7 @@ export default function UserProfile() {
           />
         </FormControl>
 
-        <FormControl id="Username" padding="3">
+        <FormControl id="Username">
           <FormLabel>Username: </FormLabel>
           <Input
             value={username}
@@ -99,7 +102,7 @@ export default function UserProfile() {
           />
         </FormControl>
 
-        <FormControl id="Name" padding="3">
+        <FormControl id="Name">
           <FormLabel>Full Name: </FormLabel>
           <Input
             value={name}
@@ -112,7 +115,7 @@ export default function UserProfile() {
           <FormHelperText>Enter your first and last Name</FormHelperText>
         </FormControl>
 
-        <FormControl id="FiscalYear" isReadOnly={true} padding="3">
+        <FormControl id="FiscalYear" isReadOnly={true}>
           <FormLabel>Fiscal Year: </FormLabel>
           <Input
             type="FiscalYear"
@@ -121,7 +124,7 @@ export default function UserProfile() {
           />
         </FormControl>
 
-        <FormControl id="PersonalNumber" padding="3">
+        <FormControl id="PersonalNumber">
           <FormLabel>Personal Number: </FormLabel>
           <Input
             type="PersonalNumber"
@@ -131,7 +134,7 @@ export default function UserProfile() {
           />
         </FormControl>
 
-        <FormControl id="CareerLevel" padding="3">
+        <FormControl id="CareerLevel">
           <FormLabel>Career Level: </FormLabel>
           <Select
             placeholder="Select career level"
@@ -141,11 +144,12 @@ export default function UserProfile() {
               setCareerLevel(e.target.value);
             }}
           >
-            <option>Option1</option>
-            <option>Option2</option>
+            <option>Junior</option>
+            <option>Mid</option>
+            <option>Senior</option>
           </Select>
         </FormControl>
-        <FormControl id="OrganizationalAssignments" padding="3">
+        <FormControl id="OrganizationalAssignments">
           <FormLabel>Organizational Assignments: </FormLabel>
           <Select
             placeholder="Select Organizational Assignments"
@@ -159,31 +163,10 @@ export default function UserProfile() {
             <option>Option2</option>
           </Select>
         </FormControl>
-        <FormControl id="Role" padding="3">
-          <FormLabel>Roles: </FormLabel>
-          <Select
-            placeholder="Select Role"
-            style={{ width: "370px" }}
-            value={role}
-            onChange={(e) => {
-              setRole(e.target.value);
-            }}
-          >
-            <option>User</option>
-            <option>Manager</option>
-            <option>Administrator</option>
-          </Select>
-        </FormControl>
-        <Button
-          style={{ width: "370px", marginLeft: "12px" }}
-          colorScheme="teal"
-          onClick={() => {
-            editUser();
-          }}
-        >
-          Edit User
-        </Button>
       </Grid>
+      <Button colorScheme="teal" onClick={editUser} mt={"3vh"} leftIcon={<FaCheck />}>
+        Update profile
+      </Button>
     </Flex>
   );
 }

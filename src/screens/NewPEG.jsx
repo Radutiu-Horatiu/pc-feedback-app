@@ -1,13 +1,11 @@
 import { Flex, Button } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { FormControl, FormLabel, Input, Box } from "@chakra-ui/react";
 import axios from "axios";
 import { useToast } from "@chakra-ui/react";
 
 export default function NewPEG() {
     const toast = useToast();
-    const user = useSelector((state) => state.user);
     const [pegId, setpegId] = useState();
     const [employeeName, setemployeeName] = useState();
     const [currentCareerLevel, setcurrentCareerLevel] = useState();

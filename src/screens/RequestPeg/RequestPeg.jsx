@@ -1,7 +1,6 @@
 import { Flex, Heading, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel } from "@chakra-ui/accordion";
-import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption } from "@chakra-ui/react";
 export default function RequestPeg() {
 	const [pegs, setpegs] = useState([]);
 	useEffect(() => {
@@ -12,9 +11,6 @@ export default function RequestPeg() {
 				setpegs(data);
 			});
 	}, []);
-	const refresh = () => {
-		console.log("refresh");
-	};
 
 	return (
 		<Flex flexDir="column" h="90vh" overflowY="scroll" w="80vw">

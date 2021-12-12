@@ -118,7 +118,7 @@ export default function NewPEG() {
 
       {/* My PEGs */}
       <Flex w="50%" flexDir="column" h="90vh" overflowY="scroll">
-        <Heading>My PEGs</Heading>
+        <Heading mb="3vh">My PEGs</Heading>
         {!PEGs.length > 0 && <Text>No PEGs for you.</Text>}
       </Flex>
 

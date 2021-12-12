@@ -29,7 +29,13 @@ export default function RegisterScreen() {
       data: {
         email,
         name,
-        uid,
+        id: uid,
+        username: "-",
+        role: "-",
+        fiscal_year: 2021,
+        personal_number: "-",
+        career_level: "-",
+        organisational_assignment: "-",
       },
     });
   };
@@ -123,9 +129,9 @@ export default function RegisterScreen() {
             colorScheme="teal"
             w="100%"
             disabled={
-              (password != passwordVerify) |
-              (password.length == 0) |
-              (passwordVerify.length == 0)
+              (password !== passwordVerify) |
+              (password.length === 0) |
+              (passwordVerify.length === 0)
             }
           >
             Register
