@@ -1,15 +1,20 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, Image } from "@chakra-ui/react";
 import { Heading, Text } from "@chakra-ui/layout";
 import React, { useState } from "react";
+import { useColorMode, useColorModeValue } from "@chakra-ui/color-mode";
 import { useSelector } from "react-redux";
 import CountUp from "react-countup";
 
+import LOGO_LIGHT from "../../assets/feedback_light.png";
+import LOGO_DARK from "../../assets/feedback_dark.png";
+
 export default function HomeScreen() {
   const user = useSelector((state) => state.user);
+  const { colorMode } = useColorMode();
 
   const [stats, setStats] = useState([]);
 
-	// load stats from backend
+  // load stats from backend
   React.useEffect(() => {
     setStats([
       { text: "Feedbacks", value: 123 },
@@ -19,18 +24,36 @@ export default function HomeScreen() {
   }, []);
 
   return (
-    <Flex flexDir="column">
-      {/* User welcome */}
-      <Heading>Welcome to My-Backfeed,</Heading>
-      <Heading size="3xl" color="teal.400">
-        {user.name}
-      </Heading>
+    <Flex
+      flexDir="column"
+      backgroundColor={useColorModeValue("gray.200", "gray.700")}
+      p="1vh"
+      w="80%"
+      borderRadius={20}
+    >
+      <Flex w="100%" justify='space-evenly' align='center'>
+        {/* User welcome */}
+        <Flex flexDir="column">
+          <Heading>Welcome to My-Backfeed,</Heading>
+          <Heading size="3xl" color="teal.400">
+            {user.name}
+          </Heading>
+        </Flex>
+
+        {/* Logo */}
+        <Flex justify="center" my="5vh">
+          <Image
+            src={colorMode === "light" ? LOGO_DARK : LOGO_LIGHT}
+            w="20vh"
+            h="20vh"
+          />
+        </Flex>
+      </Flex>
 
       {/* Stats */}
       <Flex
         justify="center"
         align="center"
-        mt="5vh"
         py="5vh"
         borderTopWidth={1}
         flexDir="column"
