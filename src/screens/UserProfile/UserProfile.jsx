@@ -1,7 +1,7 @@
-import { Flex, Grid, Heading } from "@chakra-ui/react";
+import { Flex, Grid, Heading, Text } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { Button } from "@chakra-ui/button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { API } from "../../utils/API";
 import axios from "axios";
 import { useToast } from "@chakra-ui/react";
@@ -15,7 +15,9 @@ import {
   FormHelperText,
   Input,
 } from "@chakra-ui/react";
+import { userActions } from "../../store/user/user-slice";
 export default function UserProfile() {
+  const dispatch = useDispatch();
   const toast = useToast();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -38,6 +40,24 @@ export default function UserProfile() {
     setOrganizationalAssignment(user.organizationalAssignment);
   }, [user]);
   const editUser = async () => {
+    if (
+      !name ||
+      !personalNumber ||
+      !role ||
+      !careerLevel ||
+      !organizationalAssignment
+    ) {
+      toast({
+        title: "Error.",
+        description: "All fields are mandatory.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
+      return;
+    }
+
     const myUser = {
       id: user.uid,
       name: name,
@@ -55,6 +75,7 @@ export default function UserProfile() {
         url: API.backend + "updateUser",
         data: myUser,
       });
+      dispatch(userActions.setCompletedProfile({ completedProfile: true }));
       toast({
         title: "Succes.",
         description: "User updated successfully.",
@@ -77,6 +98,7 @@ export default function UserProfile() {
   return (
     <Flex flexDirection="column" justify="left" align="left">
       <Heading>My Profile</Heading>
+      {!user.completedProfile && <Text color={"red.300"} mt={"1vh"}>Please complete profile in order to use app.</Text>}
       <Grid templateColumns="repeat(2, 1fr)" gap={3} mt={"3vh"}>
         <FormControl id="Email" isReadOnly={true}>
           <FormLabel>Email: </FormLabel>
@@ -112,7 +134,7 @@ export default function UserProfile() {
             type="Name"
             style={{ width: "370px" }}
           />
-          <FormHelperText>Enter your first and last Name</FormHelperText>
+          <FormHelperText>Enter your first and last name</FormHelperText>
         </FormControl>
 
         <FormControl id="FiscalYear" isReadOnly={true}>
@@ -147,6 +169,7 @@ export default function UserProfile() {
             <option>Junior</option>
             <option>Mid</option>
             <option>Senior</option>
+            <option>God-tier developer</option>
           </Select>
         </FormControl>
         <FormControl id="OrganizationalAssignments">
@@ -159,12 +182,19 @@ export default function UserProfile() {
               setOrganizationalAssignment(e.target.value);
             }}
           >
-            <option>Option1</option>
-            <option>Option2</option>
+            <option>Management</option>
+            <option>Recruitment</option>
+            <option>Development</option>
+            <option>Talent aquisition</option>
           </Select>
         </FormControl>
       </Grid>
-      <Button colorScheme="teal" onClick={editUser} mt={"3vh"} leftIcon={<FaCheck />}>
+      <Button
+        colorScheme="teal"
+        onClick={editUser}
+        mt={"3vh"}
+        leftIcon={<FaCheck />}
+      >
         Update profile
       </Button>
     </Flex>

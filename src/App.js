@@ -31,10 +31,11 @@ function App() {
   const [loggedIn, setloggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
   const user = useSelector((state) => state.user);
+  const completedProfile = useSelector((state) => state.user.completedProfile);
 
   React.useEffect(() => {
-    if (!user.email.length) setloggedIn(false);
-    else setloggedIn(true);
+    if (user.email.length) setloggedIn(true);
+    else setloggedIn(false);
   }, [user]);
 
   React.useEffect(() => {
@@ -46,7 +47,10 @@ function App() {
             url: API.backend + "getUser?id=" + user.uid,
           });
           const myUser = { ...response.data, uid: user.uid };
-          if (myUser) dispatch(userActions.setUser(myUser));
+          if (myUser) {
+            dispatch(userActions.setUser(myUser));
+            if (!myUser.completedProfile) history.replace("/my-profile");
+          }
         })();
       }
       setLoading(false);
@@ -83,40 +87,50 @@ function App() {
           {/* Right content */}
           <Flex flexDir="column" w="100%">
             {/* Buttons */}
-            {loggedIn && (
-              <Flex w="100%" p="2vh">
-                <Button w="100%" onClick={() => history.push("/new-peg")}>
-                  <FaPlus />
-                  <Text ml="1vh">Request new PEG</Text>
-                </Button>
-                <Button
-                  w="100%"
-                  ml="1vh"
-                  onClick={() => history.push("/new-feedback")}
-                >
-                  <FaPlus />
-                  <Text ml="1vh">Request new Feedback</Text>
-                </Button>
-              </Flex>
+            {loggedIn && completedProfile && (
+              <>
+                <Flex w="100%" p="2vh">
+                  <Button w="100%" onClick={() => history.push("/new-peg")}>
+                    <FaPlus />
+                    <Text ml="1vh">Request new PEG</Text>
+                  </Button>
+                  <Button
+                    w="100%"
+                    ml="1vh"
+                    onClick={() => history.push("/new-feedback")}
+                  >
+                    <FaPlus />
+                    <Text ml="1vh">Request new Feedback</Text>
+                  </Button>
+                </Flex>
+              </>
             )}
             {/* Dynamic content screen */}
             <Flex h="100%" justify="center" align="center">
               <Switch>
                 {loggedIn ? (
-                  <>
-                    <Route path="/my-team" exact component={MyTeamScreen} />
-                    <Route path="/feedbacks" exact component={Feedbacks} />
-                    <Route path="/my-requests" exact component={MyRequests} />
-                    <Route path="/peg-requests" exact component={RequestPeg} />
-                    <Route path="/new-peg" exact component={NewPEG} />
-                    <Route
-                      path="/new-feedback"
-                      exact
-                      component={RequestNewFeedback}
-                    />
+                  !completedProfile ? (
                     <Route path="/my-profile" exact component={UserProfile} />
-                    <Route path="/" exact component={HomeScreen} />
-                  </>
+                  ) : (
+                    <>
+                      <Route path="/my-team" exact component={MyTeamScreen} />
+                      <Route path="/feedbacks" exact component={Feedbacks} />
+                      <Route path="/my-requests" exact component={MyRequests} />
+                      <Route
+                        path="/peg-requests"
+                        exact
+                        component={RequestPeg}
+                      />
+                      <Route path="/new-peg" exact component={NewPEG} />
+                      <Route
+                        path="/new-feedback"
+                        exact
+                        component={RequestNewFeedback}
+                      />
+                      <Route path="/my-profile" exact component={UserProfile} />
+                      <Route path="/" exact component={HomeScreen} />
+                    </>
+                  )
                 ) : (
                   <>
                     <Route path="/register" exact component={RegisterScreen} />

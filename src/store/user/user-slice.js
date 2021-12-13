@@ -11,6 +11,7 @@ const initialState = {
 	personalNumber: "",
 	careerLevel: "",
 	organizationalAssignment: "",
+	completedProfile: false
 };
 
 const userSlice = createSlice({
@@ -27,9 +28,13 @@ const userSlice = createSlice({
 			state.personalNumber = action.payload.personal_number || "";
 			state.careerLevel = action.payload.career_level || "";
 			state.organizationalAssignment = action.payload.organisational_assignment || "";
+			state.completedProfile = action.payload.completedProfile || false;
 		},
 		setUsername(state, action) {
 			state.username = action.payload.username;
+		},
+		setCompletedProfile(state, action) {
+			state.completedProfile = action.payload.completedProfile;
 		},
 		setEmail(state, action) {
 			state.email = action.payload.email;
