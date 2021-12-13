@@ -43,23 +43,20 @@ export default function RegisterScreen() {
   const register = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
-        dispatch(
-          userActions.setUser({ email: userCredentials.user.email, name: name })
-        );
         saveUserToFirebase(
           userCredentials.user.email,
           name,
           userCredentials.user.uid
         );
-        history.push("/");
-        toast({
-          title: "Success.",
-          description: "Account created, you may now log in.",
-          status: "success",
-          duration: 5000,
-          isClosable: true,
-          position: "top-right",
-        });
+        (async () => {
+          const response = await axios.request({
+            method: "GET",
+            url: API.backend + "getUser?id=" + userCredentials.user.uid,
+          });
+          const myUser = { ...response.data, uid: userCredentials.user.uid };
+          if (myUser) dispatch(userActions.setUser(myUser));
+          history.push("/");
+        })();
       })
       .catch((e) => {
         console.log(e);

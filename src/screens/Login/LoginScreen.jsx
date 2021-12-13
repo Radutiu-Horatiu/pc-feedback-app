@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, useToast } from "@chakra-ui/react";
 import { Heading, Text } from "@chakra-ui/layout";
 
 import React, { useState } from "react";
@@ -17,6 +17,8 @@ export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const toast = useToast();
+
   const login = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
@@ -24,7 +26,14 @@ export default function LoginScreen() {
         history.push("/");
       })
       .catch((e) => {
-        console.log(e);
+        toast({
+          title: "Error.",
+          description: "Incorrect credentials :(",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "top-right",
+        });
       });
   };
 
