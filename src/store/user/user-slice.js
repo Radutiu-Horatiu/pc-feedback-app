@@ -3,6 +3,7 @@ import { login, register } from "./utils";
 
 const initialState = {
 	email: "",
+	uid:"",
 	username: "",
 	name: "",
 	role: "",
@@ -10,6 +11,7 @@ const initialState = {
 	personalNumber: "",
 	careerLevel: "",
 	organizationalAssignment: "",
+	completedProfile: false
 };
 
 const userSlice = createSlice({
@@ -18,16 +20,21 @@ const userSlice = createSlice({
 	reducers: {
 		setUser(state, action) {
 			state.username = action.payload.username || "";
+			state.uid = action.payload.uid || "";
 			state.email = action.payload.email || "";
 			state.name = action.payload.name || "";
 			state.role = action.payload.role || "";
-			state.fiscalYear = action.payload.fiscalYear || 0;
-			state.personalNumber = action.payload.personalNumber || "";
-			state.careerLevel = action.payload.careerLevel || "";
-			state.organizationalAssignment = action.payload.organizationalAssignment || "";
+			state.fiscalYear = action.payload.fiscal_year || 0;
+			state.personalNumber = action.payload.personal_number || "";
+			state.careerLevel = action.payload.career_level || "";
+			state.organizationalAssignment = action.payload.organisational_assignment || "";
+			state.completedProfile = action.payload.completedProfile || false;
 		},
 		setUsername(state, action) {
 			state.username = action.payload.username;
+		},
+		setCompletedProfile(state, action) {
+			state.completedProfile = action.payload.completedProfile;
 		},
 		setEmail(state, action) {
 			state.email = action.payload.email;

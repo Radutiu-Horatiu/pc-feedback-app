@@ -17,6 +17,7 @@ import {
   FaSun,
   FaUserAlt,
   FaUserCircle,
+  FaPeopleCarry,
 } from "react-icons/fa";
 import LOGO_LIGHT from "../../assets/feedback_light.png";
 import LOGO_DARK from "../../assets/feedback_dark.png";
@@ -54,15 +55,17 @@ export default function Navbar() {
             My-Backfeed
           </Heading>
         </Flex>
-        <Button
-          justifyContent="flex-start"
-          variant="ghost"
-          onClick={() => history.push("/")}
-          leftIcon={<FaHome />}
-          my="1vh"
-        >
-          <Text>Home</Text>
-        </Button>
+        {user.completedProfile && (
+          <Button
+            justifyContent="flex-start"
+            variant="ghost"
+            onClick={() => history.push("/")}
+            leftIcon={<FaHome />}
+            my="1vh"
+          >
+            <Text>Home</Text>
+          </Button>
+        )}
         <Button
           justifyContent="flex-start"
           variant="ghost"
@@ -72,38 +75,50 @@ export default function Navbar() {
         >
           <Text>My Profile</Text>
         </Button>
-        <Button
-          justifyContent="flex-start"
-          variant="ghost"
-          onClick={() => history.push("/my-requests")}
-          leftIcon={<FaCheck />}
-          my="1vh"
-        >
-          <Text>My Requests</Text>
-        </Button>
+        {user.completedProfile && (
+          <Button
+            justifyContent="flex-start"
+            variant="ghost"
+            onClick={() => history.push("/my-requests")}
+            leftIcon={<FaCheck />}
+            my="1vh"
+          >
+            <Text>My Requests</Text>
+          </Button>
+        )}
         {user?.role === "Manager" && (
-          <Button justifyContent="flex-start" variant="ghost">
+          <Button
+            justifyContent="flex-start"
+            variant="ghost"
+            onClick={() => history.push("/my-team")}
+            leftIcon={<FaPeopleCarry />}
+            my="1vh"
+          >
             <Text>My Team</Text>
           </Button>
         )}
-        <Button
-          justifyContent="flex-start"
-          variant="ghost"
-          onClick={() => history.push("/peg-requests")}
-          leftIcon={<FaList />}
-          my="1vh"
-        >
-          <Text>All PEGs</Text>
-        </Button>
-        <Button
-          justifyContent="flex-start"
-          variant="ghost"
-          onClick={() => history.push("/feedbacks")}
-          leftIcon={<FaList />}
-          my="1vh"
-        >
-          <Text>All Feedbacks</Text>
-        </Button>
+        {user.completedProfile && (
+          <Button
+            justifyContent="flex-start"
+            variant="ghost"
+            onClick={() => history.push("/peg-requests")}
+            leftIcon={<FaList />}
+            my="1vh"
+          >
+            <Text>All PEGs</Text>
+          </Button>
+        )}
+        {user.completedProfile && (
+          <Button
+            justifyContent="flex-start"
+            variant="ghost"
+            onClick={() => history.push("/feedbacks")}
+            leftIcon={<FaList />}
+            my="1vh"
+          >
+            <Text>All Feedbacks</Text>
+          </Button>
+        )}
       </Flex>
 
       {/* Down */}

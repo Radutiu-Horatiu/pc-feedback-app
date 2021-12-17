@@ -1,4 +1,4 @@
-import { Flex, Heading, Stack, Text, Button } from "@chakra-ui/react";
+import { Flex, Heading, Stack, Text, Button, Textarea } from "@chakra-ui/react";
 import { Checkbox } from "@chakra-ui/checkbox";
 import { Radio, RadioGroup } from "@chakra-ui/radio";
 import React, { useState } from "react";
@@ -19,6 +19,7 @@ export default function NewPEG() {
   // refs
   const userRef = React.useRef(null);
   const projectRef = React.useRef(null);
+  const textRef = React.useRef(null);
 
   // data
   const [categories, setCategories] = useState([]);
@@ -42,10 +43,10 @@ export default function NewPEG() {
 
   // send feedback to backend
   const sendFeedback = async () => {
-    if (!userRef.current.value || !projectRef.current.value || !categoryValue) {
+    if (!categoryValue) {
       toast({
         title: "Fields missing.",
-        description: "All fields are mandatory.",
+        description: "Category is a mandatory field.",
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -57,10 +58,11 @@ export default function NewPEG() {
     const myFeedback = {
       from_user_id: user.email,
       to_user_id: userRef.current.value,
-      status: "sent",
-      project_id: projectRef.current.value,
+      status: textRef.current.value ? "received" : "sent",
+      project_id: projectRef.current.value || "",
       anonym: isAnonym,
       category: categoryValue,
+      text: textRef.current.value || "",
     };
 
     await axios.request({
@@ -71,6 +73,7 @@ export default function NewPEG() {
 
     userRef.current.value = "";
     projectRef.current.value = "";
+    textRef.current.value = "";
     setcategoryValue(null);
     setIsAnonym(false);
 
@@ -129,9 +132,15 @@ export default function NewPEG() {
         </RadioGroup>
       </FormControl>
 
+      {/* Text */}
+      <FormControl id="Text" padding="3">
+        <FormLabel>Feedback text: </FormLabel>
+        <Textarea placeholder="Write feedback here.." ref={textRef} />
+      </FormControl>
+
       {/* Send request */}
       <Button leftIcon={<FaPaperPlane />} mt={3} onClick={() => sendFeedback()}>
-        Send request
+        Send request/feedback
       </Button>
     </Flex>
   );

@@ -10,13 +10,10 @@ import {
 import axios from "axios";
 import React, { useState } from "react";
 import { API } from "../../utils/API";
-import { useColorMode, useColorModeValue } from "@chakra-ui/color-mode";
 import { FaCheck } from "react-icons/fa";
 
 export default function Feedbacks() {
   const [feedbacks, setFeedbacks] = useState([]);
-
-  const themeBackground = useColorModeValue("gray.200", "gray.700");
 
   React.useEffect(() => {
     (async () => {

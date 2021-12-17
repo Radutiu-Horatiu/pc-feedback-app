@@ -1,9 +1,10 @@
 import { Flex } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { FormControl, FormLabel, Input, Grid, Box } from "@chakra-ui/react";
+import { FormControl, FormLabel, Input, Box } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
 import { createUserWithEmailAndPassword } from "@firebase/auth";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useToast } from "@chakra-ui/react";
 import { userActions } from "../../store/user/user-slice";
 import { auth } from "../../firebase";
 import { useHistory } from "react-router";
@@ -13,6 +14,7 @@ import { useColorModeValue } from "@chakra-ui/color-mode";
 import axios from "axios";
 
 export default function RegisterScreen() {
+  const toast = useToast();
   const history = useHistory();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
@@ -27,7 +29,13 @@ export default function RegisterScreen() {
       data: {
         email,
         name,
-        uid,
+        id: uid,
+        username: "-",
+        role: "-",
+        fiscal_year: 2021,
+        personal_number: "-",
+        career_level: "-",
+        organisational_assignment: "-",
       },
     });
   };
@@ -35,14 +43,20 @@ export default function RegisterScreen() {
   const register = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
-        dispatch(userActions.setEmail({ email: userCredentials.user.email }));
-        dispatch(userActions.setName({ name: name }));
         saveUserToFirebase(
           userCredentials.user.email,
           name,
           userCredentials.user.uid
         );
-        history.push("/");
+        (async () => {
+          const response = await axios.request({
+            method: "GET",
+            url: API.backend + "getUser?id=" + userCredentials.user.uid,
+          });
+          const myUser = { ...response.data, uid: userCredentials.user.uid };
+          if (myUser) dispatch(userActions.setUser(myUser));
+          history.push("/");
+        })();
       })
       .catch((e) => {
         console.log(e);
@@ -112,9 +126,9 @@ export default function RegisterScreen() {
             colorScheme="teal"
             w="100%"
             disabled={
-              (password != passwordVerify) |
-              (password.length == 0) |
-              (passwordVerify.length == 0)
+              (password !== passwordVerify) |
+              (password.length === 0) |
+              (passwordVerify.length === 0)
             }
           >
             Register
@@ -126,7 +140,11 @@ export default function RegisterScreen() {
           <strong>Already have an account? Please log in!</strong>
         </Text>
         <FormControl>
-          <Button colorScheme="teal" onClick={() => history.push("/login")} w="100%">
+          <Button
+            colorScheme="teal"
+            onClick={() => history.push("/login")}
+            w="100%"
+          >
             Log In
           </Button>
         </FormControl>
