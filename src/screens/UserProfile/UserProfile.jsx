@@ -43,7 +43,6 @@ export default function UserProfile() {
     if (
       !name ||
       !personalNumber ||
-      !role ||
       !careerLevel ||
       !organizationalAssignment
     ) {
@@ -166,10 +165,11 @@ export default function UserProfile() {
               setCareerLevel(e.target.value);
             }}
           >
-            <option>Junior</option>
-            <option>Mid</option>
-            <option>Senior</option>
-            <option>God-tier developer</option>
+            <option>Junior consultant</option>
+            <option>Consultant</option>
+            <option>Senior constultant</option>
+            <option>Manager</option>
+            <option>Senior manager</option>
           </Select>
         </FormControl>
         <FormControl id="OrganizationalAssignments">

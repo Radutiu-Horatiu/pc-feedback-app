@@ -1,4 +1,4 @@
-import { Flex, Heading, Select, useToast } from "@chakra-ui/react";
+import { Flex, Heading, Select, Text, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useState } from "react";
 import { Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
@@ -8,7 +8,13 @@ import { useSelector } from "react-redux";
 
 export default function MyTeamScreen() {
   const [teamMembers, setteamMembers] = useState([]);
-  const availableRoles = ["Manager", "Engineer", "Developer", "Lead"];
+  const availableRoles = [
+    "Manager",
+    "Engineer",
+    "Developer",
+    "Lead",
+    "Administrator",
+  ];
   const toast = useToast();
   const user = useSelector((state) => state.user);
   const { colorMode } = useColorMode();
@@ -55,7 +61,7 @@ export default function MyTeamScreen() {
 
   return (
     <Flex flexDir={"column"}>
-      <Heading>My Team</Heading>
+      <Heading>{user?.role === "Administrator" ? "People" : "My Team"}</Heading>
       <Flex overflowY={"scroll"} maxH={"80vh"}>
         <Table
           variant="striped"
@@ -87,23 +93,28 @@ export default function MyTeamScreen() {
                   <Td>{member.name}</Td>
                   <Td>{member.email}</Td>
                   <Td>{member.username}</Td>
-                  <Td>
-                    <Select
-                      defaultValue={
-                        availableRoles.includes(member.role) ? member.role : ""
-                      }
-                      placeholder="Choose role"
-                      onChange={(e) => {
-                        updateUserRole(member, e.target.value);
-                      }}
-                    >
-                      {availableRoles.map((obj, i) => (
-                        <option key={i} value={obj}>
-                          {obj}
-                        </option>
-                      ))}
-                    </Select>
-                  </Td>
+                  {user.role === "Administrator" &&
+                  member.email !== user.email ? (
+                    <Td>
+                      <Select
+                        defaultValue={member.role || ""}
+                        placeholder="Choose role"
+                        onChange={(e) => {
+                          updateUserRole(member, e.target.value);
+                        }}
+                      >
+                        {availableRoles.map((obj, i) => (
+                          <option key={i} value={obj}>
+                            {obj}
+                          </option>
+                        ))}
+                      </Select>
+                    </Td>
+                  ) : (
+                    <Td>
+                      <Text>{user.role}</Text>
+                    </Td>
+                  )}
                   <Td>{member.personal_number}</Td>
                   <Td>{member.career_level}</Td>
                   <Td>{member.fiscal_year}</Td>

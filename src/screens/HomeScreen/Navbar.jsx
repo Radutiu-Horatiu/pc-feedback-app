@@ -34,7 +34,7 @@ export default function Navbar() {
     dispatch(userActions.signOut());
     history.push("/login");
   };
-  
+
   return (
     <Flex
       flexDir="column"
@@ -86,7 +86,9 @@ export default function Navbar() {
             <Text>My Requests</Text>
           </Button>
         )}
-        {user?.role === "Manager" && (
+        {(user?.career_level === "Manager" ||
+          user?.career_level === "Senior Manager" ||
+          user?.role === "Administrator") && (
           <Button
             justifyContent="flex-start"
             variant="ghost"
@@ -94,7 +96,7 @@ export default function Navbar() {
             leftIcon={<FaPeopleCarry />}
             my="1vh"
           >
-            <Text>My Team</Text>
+            <Text>{user?.role === "Administrator" ? "People" : "My Team"}</Text>
           </Button>
         )}
         {user.completedProfile && (
