@@ -34,7 +34,7 @@ export default function Navbar() {
     dispatch(userActions.signOut());
     history.push("/login");
   };
-
+  
   return (
     <Flex
       flexDir="column"
