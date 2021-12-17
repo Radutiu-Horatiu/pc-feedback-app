@@ -77,6 +77,7 @@ export default function MyTeamScreen() {
               <Th>Career Level</Th>
               <Th>Fiscal Year</Th>
               <Th>Organisational Assignment</Th>
+              {user.role === "Administrator" && <Th>Assign</Th>}
             </Tr>
           </Thead>
           <Tbody>
@@ -119,6 +120,21 @@ export default function MyTeamScreen() {
                   <Td>{member.career_level}</Td>
                   <Td>{member.fiscal_year}</Td>
                   <Td>{member.organisational_assignment}</Td>
+                  {<Td>
+                    <Select
+                      defaultValue={member.role || ""}
+                      placeholder="Choose role"
+                      onChange={(e) => {
+                        updateUserRole(member, e.target.value);
+                      }}
+                    >
+                      {availableRoles.map((obj, i) => (
+                        <option key={i} value={obj}>
+                          {obj}
+                        </option>
+                      ))}
+                    </Select>
+                  </Td>}
                 </Tr>
               );
             })}

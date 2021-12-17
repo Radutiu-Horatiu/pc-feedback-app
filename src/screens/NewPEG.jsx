@@ -64,7 +64,7 @@ export default function NewPEG() {
         projectId: 1,
         projectName: "name",
         projectManager: "m1",
-        evaluator: "ev1",
+        evaluator: ["ev1", "ev2"],
         customers: ["c1", "c2"],
         projectDays: 10,
       },
@@ -72,7 +72,7 @@ export default function NewPEG() {
         projectId: 2,
         projectName: "name2",
         projectManager: "m12",
-        evaluator: "ev12",
+        evaluator: ["ev12"],
         customers: ["c1", "c2"],
         projectDays: 100,
       },
@@ -108,6 +108,8 @@ export default function NewPEG() {
       project_id: projectID,
       number_of_days_evaluated: numberOfDaysEvaluated,
     };
+
+    console.log(myPEG);
 
     //   await axios.request({
     //     method: "POST",
