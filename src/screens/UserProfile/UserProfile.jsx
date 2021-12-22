@@ -16,6 +16,8 @@ import {
   Input,
 } from "@chakra-ui/react";
 import { userActions } from "../../store/user/user-slice";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase";
 export default function UserProfile() {
   const dispatch = useDispatch();
   const toast = useToast();
@@ -40,12 +42,7 @@ export default function UserProfile() {
     setOrganizationalAssignment(user.organizationalAssignment);
   }, [user]);
   const editUser = async () => {
-    if (
-      !name ||
-      !personalNumber ||
-      !careerLevel ||
-      !organizationalAssignment
-    ) {
+    if (!name || !personalNumber || !careerLevel || !organizationalAssignment) {
       toast({
         title: "Error.",
         description: "All fields are mandatory.",
@@ -56,23 +53,17 @@ export default function UserProfile() {
       });
       return;
     }
-
-    const myUser = {
-      id: user.uid,
-      name: name,
-      username: username,
-      email: email,
-      role: role,
-      fiscal_year: fiscalYear,
-      personal_number: personalNumber,
-      career_level: careerLevel,
-      organisational_assignment: organizationalAssignment,
-    };
     try {
-      await axios.request({
-        method: "POST",
-        url: API.backend + "updateUser",
-        data: myUser,
+      const docRef = doc(db, "users", user.uid);
+      await updateDoc(docRef, {
+        name: name,
+        username: username,
+        email: email,
+        role: role,
+        fiscal_year: fiscalYear,
+        personal_number: personalNumber,
+        career_level: careerLevel,
+        organisational_assignment: organizationalAssignment,
       });
       dispatch(userActions.setCompletedProfile({ completedProfile: true }));
       toast({
@@ -97,7 +88,11 @@ export default function UserProfile() {
   return (
     <Flex flexDirection="column" justify="left" align="left">
       <Heading>My Profile</Heading>
-      {!user.completedProfile && <Text color={"red.300"} mt={"1vh"}>Please complete profile in order to use app.</Text>}
+      {!user.completedProfile && (
+        <Text color={"red.300"} mt={"1vh"}>
+          Please complete profile in order to use app.
+        </Text>
+      )}
       <Grid templateColumns="repeat(2, 1fr)" gap={3} mt={"3vh"}>
         <FormControl id="Email" isReadOnly={true}>
           <FormLabel>Email: </FormLabel>

@@ -37,8 +37,8 @@ export default function NewPEG() {
       setUsers(response.data);
     })();
 
-    setCategories(["category1", "category2", "category3"]);
-    setProjects(["Project1", "Project2"]);
+    setCategories(["Tech skills", "Soft skills", "Other skills"]);
+    setProjects(["Galactic colonization", "Web 3.0", "Backfeed-Coin"]);
   }, []);
 
   // send feedback to backend

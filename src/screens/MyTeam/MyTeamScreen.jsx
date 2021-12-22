@@ -32,10 +32,12 @@ export default function MyTeamScreen() {
         method: "GET",
         url: "http://127.0.0.1:8000/getAllUsers/",
       });
-      setteamMembers(members.data);
+
+      const myTeam = members.data.filter((u) => user.uid === u.id)[0]?.team;
+
+      setteamMembers(members.data.filter((u) => myTeam === u.team && user.uid !== u.id));
     })();
   }, []);
-
 
   const updateUser = async (thisUser, field, value) => {
     let myUser = thisUser;
@@ -82,12 +84,12 @@ export default function MyTeamScreen() {
             <Tr>
               <Th>Name</Th>
               <Th>Email</Th>
-              {/* <Th>Username</Th> */}
-              <Th>Role</Th>
-              {/* <Th>Personal Number</Th> */}
+              {user.role !== "Administrator" && <Th>Username</Th>}
+              {user.role !== "Administrator" && <Th>Role</Th>}
+              {user.role !== "Administrator" && <Th>Personal Number</Th>}
               <Th>Career Level</Th>
-              {/* <Th>Fiscal Year</Th> */}
-              {/* <Th>Org. Assignment</Th> */}
+              {user.role !== "Administrator" && <Th>Fiscal Year</Th>}
+              {user.role !== "Administrator" && <Th>Org. Assignment</Th>}
               {user.role === "Administrator" && (
                 <>
                   <Th>Assign project</Th>
@@ -109,7 +111,7 @@ export default function MyTeamScreen() {
                 >
                   <Td>{member.name}</Td>
                   <Td>{member.email}</Td>
-                  {/* <Td>{member.username}</Td> */}
+                  {user.role !== "Administrator" && <Td>{member.username}</Td>}
                   {user.role === "Administrator" &&
                   member.email !== user.email ? (
                     <Td>
@@ -132,11 +134,19 @@ export default function MyTeamScreen() {
                       <Text>{user.role}</Text>
                     </Td>
                   )}
-                  {/* <Td>{member.personal_number}</Td> */}
-                  <Td>{member.career_level}</Td>
-                  {/* <Td>{member.fiscal_year}</Td> */}
-                  {/* <Td>{member.organisational_assignment}</Td> */}
-                  {
+                  {user.role !== "Administrator" && (
+                    <Td>{member.personal_number}</Td>
+                  )}
+                  {user.role !== "Administrator" && (
+                    <Td>{member.career_level}</Td>
+                  )}
+                  {user.role !== "Administrator" && (
+                    <Td>{member.fiscal_year}</Td>
+                  )}
+                  {user.role !== "Administrator" && (
+                    <Td>{member.organisational_assignment}</Td>
+                  )}
+                  {user.role === "Administrator" && (
                     <>
                       <Td>
                         <Select
@@ -169,7 +179,7 @@ export default function MyTeamScreen() {
                         </Select>
                       </Td>
                     </>
-                  }
+                  )}
                 </Tr>
               );
             })}

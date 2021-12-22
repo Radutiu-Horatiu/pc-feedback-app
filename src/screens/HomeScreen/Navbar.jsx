@@ -86,8 +86,8 @@ export default function Navbar() {
             <Text>My Requests</Text>
           </Button>
         )}
-        {(user?.career_level === "Manager" ||
-          user?.career_level === "Senior Manager" ||
+        {(user?.careerLevel === "Manager" ||
+          user?.careerLevel === "Senior Manager" ||
           user?.role === "Administrator") && (
           <Button
             justifyContent="flex-start"
