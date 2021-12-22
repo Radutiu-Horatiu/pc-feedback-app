@@ -19,6 +19,13 @@ export default function MyTeamScreen() {
   const user = useSelector((state) => state.user);
   const { colorMode } = useColorMode();
 
+  const availableProjects = [
+    "Galactic colonization",
+    "Web 3.0",
+    "Backfeed-Coin",
+  ];
+  const availableTeams = ["Team A", "Team B", "Team C"];
+
   React.useEffect(() => {
     (async () => {
       let members = await axios.request({
@@ -29,9 +36,13 @@ export default function MyTeamScreen() {
     })();
   }, []);
 
-  const updateUserRole = async (thisUser, role) => {
+
+  const updateUser = async (thisUser, field, value) => {
     let myUser = thisUser;
-    myUser.role = role;
+
+    myUser.team = myUser.team || "-";
+    myUser.project = myUser.project || "-";
+    myUser[field] = value;
 
     try {
       await axios.request({
@@ -41,7 +52,7 @@ export default function MyTeamScreen() {
       });
       toast({
         title: "Succes.",
-        description: "User role updated successfully.",
+        description: "User team updated successfully.",
         status: "success",
         duration: 5000,
         isClosable: true,
@@ -60,7 +71,7 @@ export default function MyTeamScreen() {
   };
 
   return (
-    <Flex flexDir={"column"}>
+    <Flex flexDir={"column"} px={"3vh"}>
       <Heading>{user?.role === "Administrator" ? "People" : "My Team"}</Heading>
       <Flex overflowY={"scroll"} maxH={"80vh"}>
         <Table
@@ -71,13 +82,18 @@ export default function MyTeamScreen() {
             <Tr>
               <Th>Name</Th>
               <Th>Email</Th>
-              <Th>Username</Th>
+              {/* <Th>Username</Th> */}
               <Th>Role</Th>
-              <Th>Personal Number</Th>
+              {/* <Th>Personal Number</Th> */}
               <Th>Career Level</Th>
-              <Th>Fiscal Year</Th>
-              <Th>Organisational Assignment</Th>
-              {user.role === "Administrator" && <Th>Assign</Th>}
+              {/* <Th>Fiscal Year</Th> */}
+              {/* <Th>Org. Assignment</Th> */}
+              {user.role === "Administrator" && (
+                <>
+                  <Th>Assign project</Th>
+                  <Th>Assign team</Th>
+                </>
+              )}
             </Tr>
           </Thead>
           <Tbody>
@@ -93,7 +109,7 @@ export default function MyTeamScreen() {
                 >
                   <Td>{member.name}</Td>
                   <Td>{member.email}</Td>
-                  <Td>{member.username}</Td>
+                  {/* <Td>{member.username}</Td> */}
                   {user.role === "Administrator" &&
                   member.email !== user.email ? (
                     <Td>
@@ -101,7 +117,7 @@ export default function MyTeamScreen() {
                         defaultValue={member.role || ""}
                         placeholder="Choose role"
                         onChange={(e) => {
-                          updateUserRole(member, e.target.value);
+                          updateUser(member, "role", e.target.value);
                         }}
                       >
                         {availableRoles.map((obj, i) => (
@@ -116,25 +132,44 @@ export default function MyTeamScreen() {
                       <Text>{user.role}</Text>
                     </Td>
                   )}
-                  <Td>{member.personal_number}</Td>
+                  {/* <Td>{member.personal_number}</Td> */}
                   <Td>{member.career_level}</Td>
-                  <Td>{member.fiscal_year}</Td>
-                  <Td>{member.organisational_assignment}</Td>
-                  {<Td>
-                    <Select
-                      defaultValue={member.role || ""}
-                      placeholder="Choose role"
-                      onChange={(e) => {
-                        updateUserRole(member, e.target.value);
-                      }}
-                    >
-                      {availableRoles.map((obj, i) => (
-                        <option key={i} value={obj}>
-                          {obj}
-                        </option>
-                      ))}
-                    </Select>
-                  </Td>}
+                  {/* <Td>{member.fiscal_year}</Td> */}
+                  {/* <Td>{member.organisational_assignment}</Td> */}
+                  {
+                    <>
+                      <Td>
+                        <Select
+                          defaultValue={member.project || ""}
+                          placeholder="Project"
+                          onChange={(e) => {
+                            updateUser(member, "project", e.target.value);
+                          }}
+                        >
+                          {availableProjects.map((obj, i) => (
+                            <option key={i} value={obj}>
+                              {obj}
+                            </option>
+                          ))}
+                        </Select>
+                      </Td>
+                      <Td>
+                        <Select
+                          defaultValue={member.team || ""}
+                          placeholder="Team"
+                          onChange={(e) => {
+                            updateUser(member, "team", e.target.value);
+                          }}
+                        >
+                          {availableTeams.map((obj, i) => (
+                            <option key={i} value={obj}>
+                              {obj}
+                            </option>
+                          ))}
+                        </Select>
+                      </Td>
+                    </>
+                  }
                 </Tr>
               );
             })}
