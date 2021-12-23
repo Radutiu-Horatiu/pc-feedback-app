@@ -24,51 +24,52 @@ export default function HomeScreen() {
   }, []);
 
   return (
-    <Flex
-      flexDir="column"
-      backgroundColor={useColorModeValue("gray.200", "gray.700")}
-      p="1vh"
-      w="80%"
-      borderRadius={20}
-    >
-      <Flex w="100%" justify='space-evenly' align='center'>
-        {/* User welcome */}
-        <Flex flexDir="column">
-          <Heading>Welcome to My-Backfeed,</Heading>
-          <Heading size="3xl" color="teal.400">
-            {user.name}
-          </Heading>
-        </Flex>
-
-        {/* Logo */}
-        <Flex justify="center" my="5vh">
-          <Image
-            src={colorMode === "light" ? LOGO_DARK : LOGO_LIGHT}
-            w="20vh"
-            h="20vh"
-          />
-        </Flex>
-      </Flex>
-
-      {/* Stats */}
+    <Flex flexDir="column" w="80%">
       <Flex
-        justify="center"
-        align="center"
-        py="5vh"
-        borderTopWidth={1}
         flexDir="column"
+        backgroundColor={useColorModeValue("gray.200", "gray.700")}
+        p="1vh"
+        borderRadius={20}
       >
-        <Heading>Stats</Heading>
-        <Flex justify="space-evenly" w="100%" mt="1vh">
-          {/* Total feedback requests */}
-          {stats.map((obj, i) => (
-            <Flex key={i} flexDir="column" align="center" justify="center">
-              <Text fontSize="4vh" color="teal.400" fontWeight="bold">
-                <CountUp end={obj.value} duration={3} />
-              </Text>
-              <Text>{obj.text}</Text>
-            </Flex>
-          ))}
+        <Flex w="100%" justify="space-evenly" align="center">
+          {/* User welcome */}
+          <Flex flexDir="column">
+            <Heading>Welcome to My-Backfeed,</Heading>
+            <Heading size="3xl" color="teal.400">
+              {user.name}
+            </Heading>
+          </Flex>
+
+          {/* Logo */}
+          <Flex justify="center" my="3vh">
+            <Image
+              src={colorMode === "light" ? LOGO_DARK : LOGO_LIGHT}
+              w="20vh"
+              h="20vh"
+            />
+          </Flex>
+        </Flex>
+
+        {/* Stats */}
+        <Flex
+          justify="center"
+          align="center"
+          py="3vh"
+          borderTopWidth={1}
+          flexDir="column"
+        >
+          <Heading>Stats</Heading>
+          <Flex justify="space-evenly" w="100%" mt="1vh">
+            {/* Total feedback requests */}
+            {stats.map((obj, i) => (
+              <Flex key={i} flexDir="column" align="center" justify="center">
+                <Text fontSize="4vh" color="teal.400" fontWeight="bold">
+                  <CountUp end={obj.value} duration={3} />
+                </Text>
+                <Text>{obj.text}</Text>
+              </Flex>
+            ))}
+          </Flex>
         </Flex>
       </Flex>
     </Flex>
