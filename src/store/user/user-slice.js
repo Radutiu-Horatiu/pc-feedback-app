@@ -11,7 +11,9 @@ const initialState = {
 	personalNumber: "",
 	careerLevel: "",
 	organizationalAssignment: "",
-	completedProfile: false
+	completedProfile: false,
+	team: "-",
+	project: "-"
 };
 
 const userSlice = createSlice({
@@ -29,6 +31,8 @@ const userSlice = createSlice({
 			state.careerLevel = action.payload.career_level || "";
 			state.organizationalAssignment = action.payload.organisational_assignment || "";
 			state.completedProfile = action.payload.completedProfile || false;
+			state.team = action.payload.team || "-";
+			state.project = action.payload.project || "-";
 		},
 		setUsername(state, action) {
 			state.username = action.payload.username;

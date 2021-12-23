@@ -36,6 +36,8 @@ export default function RegisterScreen() {
         personal_number: "-",
         career_level: "-",
         organisational_assignment: "-",
+        team: "-",
+        project: "-",
       },
     });
   };

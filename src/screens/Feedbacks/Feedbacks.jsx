@@ -10,7 +10,7 @@ import {
 import axios from "axios";
 import React, { useState } from "react";
 import { API } from "../../utils/API";
-import { FaCheck } from "react-icons/fa";
+import { FaCaretRight, FaCheck, FaUser } from "react-icons/fa";
 
 export default function Feedbacks() {
   const [feedbacks, setFeedbacks] = useState([]);
@@ -32,26 +32,36 @@ export default function Feedbacks() {
       <Accordion allowToggle mt="1vh" px="1vh">
         {feedbacks.map((obj, i) => (
           <AccordionItem key={i} border="none">
-            <AccordionButton
-              p="2vh"
-              borderWidth={1}
-              h="11vh"
-              borderRadius={20}
-              my="2vh"
-            >
+            <AccordionButton p="2vh" borderWidth={1} borderRadius={20} my="2vh">
               <Flex flex="1" textAlign="left" align="center">
                 <Flex w="100%" justify="center" flexDir="column">
-                  <Text fontWeight="bold">#{i} Feedback</Text>
-                  <Text>{obj.project_id}</Text>
+                  <Text fontWeight="bold">
+                    #{feedbacks.length - i} Feedback
+                  </Text>
+                  <Text fontSize={"2vh"} color={"teal.400"} fontWeight={"bold"}>
+                    {obj.project_id}
+                  </Text>
+                  <Text fontSize={"2vh"} color={"gray.400"} fontWeight={"bold"}>
+                    {obj.category}
+                  </Text>
                   <Flex>
                     {!obj.anonym && (
-                      <>
-                        <Text>Request sent by: {obj.from_user_id}</Text>
-                        <Text ml="1vh">To: {obj.to_user_id}</Text>
-                      </>
+                      <Flex align={"center"} my="1vh">
+                        <FaUser />
+                        <Text mr="2vh" ml="1vh" fontWeight={"bold"}>
+                          {obj.from_user_id}
+                        </Text>
+                        <FaCaretRight />
+                        <FaUser style={{ marginLeft: "2vh" }} />
+                        <Text ml="1vh" fontWeight={"bold"}>
+                          {obj.to_user_id}
+                        </Text>
+                      </Flex>
                     )}
                   </Flex>
-                  <Text fontSize="1.3vh">{new Date(obj.timestamp).toLocaleString("en-US")}</Text>
+                  <Text fontSize="1.3vh">
+                    {new Date(obj.timestamp).toLocaleString("en-US")}
+                  </Text>
                 </Flex>
                 <Button
                   textTransform="capitalize"
