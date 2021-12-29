@@ -75,27 +75,27 @@ export default function NewPEG() {
     ]);
     setProjects([
       {
-        projectId: 1,
+        projectId: "1",
         projectName: "Porsche App",
         projectManager: "Anda Khreiss",
-        evaluator: ["Anda Khreiss"],
-        customers: ["Porsche Munchen", "Porsche Stuttgart"],
+        evaluator: "Popescu Ioana",
+        customers: "Porsche Munchen",
         projectDays: 100,
       },
       {
-        projectId: 2,
+        projectId: "2",
         projectName: "Project 1",
         projectManager: "Popescu Ioana",
-        evaluator: ["Anda Khreiss", "Popescu Ioana"],
-        customers: ["Porsche Munchen", "Porsche Stuttgart"],
+        evaluator: "Anda Khreiss",
+        customers: "Porsche Stuttgart",
         projectDays: 10,
       },
       {
-        projectId: 3,
+        projectId: "3",
         projectName: "Project 2",
         projectManager: "Andrew Smith",
-        evaluator: ["Andrew Smith"],
-        customers: ["Porsche Munchen", "Porsche Stuttgart"],
+        evaluator: "Andrew Smith",
+        customers: "Porsche Stuttgart",
         projectDays: 100,
       },
 
@@ -121,38 +121,49 @@ export default function NewPEG() {
     }
 
     const myPEG = {
-      from_user_id: user.email,
-      employee_name: user.name,
-      personnel_number: user.personalNumber,
-      current_career_level: user.careerLevel,
-      organizational_assignment: user.organizationalAssignment,
+      peg_id: user.personalNumber,
+      fiscal_year: 2021,
+      user_id: user.email,
       date_of_peg: getCurrentDate("/"),
+      project_id: selectedProject.projectId,
+      customer_name: selectedProject.customers,
       name_of_project: projectRef.current.value,
-      project_id: projectID,
-      number_of_days_evaluated: numberOfDaysEvaluated,
+      name_of_manager: selectedProject.projectManager,
+      evaluator_name: selectedProject.evaluator,
+      no_of_project_days_evaluated: selectedProject.projectDays,
+      criteria: 1,
+      status: "pending"
     };
 
-    console.log(myPEG);
 
-    //   await axios.request({
-    //     method: "POST",
-    //     url: API.backend + "addFeedback",
-    //     data: myFeedback,
-    //   });
+    try {
+      await axios.request({
+        method: "POST",
+        url: API.backend + "addPeg/",
+        data: myPEG,
+      })
+      console.log(myPEG);
 
-    //   userRef.current.value = "";
-    //   projectRef.current.value = "";
-    //   setcategoryValue(null);
-    //   setIsAnonym(false);
+      //toast success
+      toast({
+        title: "Success.",
+        description: "PEG added successfully.",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
 
-    //   toast({
-    //     title: "Success.",
-    //     description: "Request sent successfully.",
-    //     status: "success",
-    //     duration: 5000,
-    //     isClosable: true,
-    //     position: "top-right",
-    //   });
+    } catch (error) {
+      toast({
+        title: "Failed.",
+        description: "Something went wrong.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      })
+    }
   };
 
   return (
