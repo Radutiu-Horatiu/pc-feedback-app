@@ -24,9 +24,8 @@ export function getCurrentDate(separator = "") {
   let month = newDate.getMonth() + 1;
   let year = newDate.getFullYear();
 
-  return `${year}${separator}${
-    month < 10 ? `0${month}` : `${month}`
-  }${separator}${date}`;
+  return `${year}${separator}${month < 10 ? `0${month}` : `${month}`
+    }${separator}${date}`;
 }
 
 export default function NewPEG() {
@@ -59,23 +58,47 @@ export default function NewPEG() {
 
     // setUsers(response.data);
     // })();
+    setEvaluators([
+      {
+        evaluatorId: 1,
+        evaluatorName: "Anda Khreiss"
+      },
+      {
+        evaluatorId: 2,
+        evaluatorName: "Popescu Ioana"
+      },
+      {
+        evaluatorId: 3,
+        evaluatorName: "Andrew Smith"
+      },
+
+    ]);
     setProjects([
       {
         projectId: 1,
-        projectName: "name",
-        projectManager: "m1",
-        evaluator: ["ev1", "ev2"],
-        customers: ["c1", "c2"],
-        projectDays: 10,
+        projectName: "Porsche App",
+        projectManager: "Anda Khreiss",
+        evaluator: ["Anda Khreiss"],
+        customers: ["Porsche Munchen", "Porsche Stuttgart"],
+        projectDays: 100,
       },
       {
         projectId: 2,
-        projectName: "name2",
-        projectManager: "m12",
-        evaluator: ["ev12"],
-        customers: ["c1", "c2"],
+        projectName: "Project 1",
+        projectManager: "Popescu Ioana",
+        evaluator: ["Anda Khreiss", "Popescu Ioana"],
+        customers: ["Porsche Munchen", "Porsche Stuttgart"],
+        projectDays: 10,
+      },
+      {
+        projectId: 3,
+        projectName: "Project 2",
+        projectManager: "Andrew Smith",
+        evaluator: ["Andrew Smith"],
+        customers: ["Porsche Munchen", "Porsche Stuttgart"],
         projectDays: 100,
       },
+
     ]);
   }, []);
 
@@ -173,10 +196,33 @@ export default function NewPEG() {
           </FormControl>
           {selectedProject && (
             <Flex flexDir="column">
-              <Text>Name: {selectedProject.projectName}</Text>
-              <Text>Manager: {selectedProject.projectManager}</Text>
-              <Text>Evaluator: {selectedProject.evaluator}</Text>
-              <Text>Days: {selectedProject.projectDays}</Text>
+              <FormControl id="project-name" isDisabled padding="2">
+                <FormLabel>Name</FormLabel>
+                <Input type="text" value={selectedProject.projectName} />
+              </FormControl>
+              <FormControl id="project-manager" isDisabled padding="2">
+                <FormLabel>Manager</FormLabel>
+                <Input type="text" value={selectedProject.projectManager} />
+              </FormControl>
+              {/* <FormControl id="evaluator" isDisabled padding="2">
+                <FormLabel>Evaluator</FormLabel>
+                <Input type="text" value={selectedProject.evaluator} />
+              </FormControl> */}
+              <FormControl id="evaluator" padding="2">
+                <FormLabel>Name of the evaluator</FormLabel>
+                <Select
+                  placeholder="Select evaluator"
+                  ref={evaluatorRef}
+                >
+                  {evaluators.map((obj, i) => (
+                    <option key={i}>{obj.evaluatorName}</option>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormControl id="evaluator" isDisabled padding="2">
+                <FormLabel>Days</FormLabel>
+                <Input type="text" value={selectedProject.projectDays} />
+              </FormControl>
             </Flex>
           )}
 
