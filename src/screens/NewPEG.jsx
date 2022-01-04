@@ -34,12 +34,6 @@ export default function NewPEG() {
   const user = useSelector((state) => state.user);
   const [selectedProject, setSelectedProject] = useState(null);
 
-  const availableProjects = [
-    "Galactic colonization",
-    "Web 3.0",
-    "Backfeed-Coin",
-  ];
-
   // data
   const [evaluators, setEvaluators] = useState([]);
   const [projects, setProjects] = useState([]);
