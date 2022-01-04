@@ -24,9 +24,8 @@ export function getCurrentDate(separator = "") {
   let month = newDate.getMonth() + 1;
   let year = newDate.getFullYear();
 
-  return `${year}${separator}${
-    month < 10 ? `0${month}` : `${month}`
-  }${separator}${date}`;
+  return `${year}${separator}${month < 10 ? `0${month}` : `${month}`
+    }${separator}${date}`;
 }
 
 export default function NewPEG() {
@@ -59,23 +58,47 @@ export default function NewPEG() {
 
     // setUsers(response.data);
     // })();
+    setEvaluators([
+      {
+        evaluatorId: 1,
+        evaluatorName: "Anda Khreiss"
+      },
+      {
+        evaluatorId: 2,
+        evaluatorName: "Popescu Ioana"
+      },
+      {
+        evaluatorId: 3,
+        evaluatorName: "Andrew Smith"
+      },
+
+    ]);
     setProjects([
       {
-        projectId: 1,
-        projectName: "name",
-        projectManager: "m1",
-        evaluator: ["ev1", "ev2"],
-        customers: ["c1", "c2"],
+        projectId: "1",
+        projectName: "Porsche App",
+        projectManager: "Anda Khreiss",
+        evaluator: "Popescu Ioana",
+        customers: "Porsche Munchen",
+        projectDays: 100,
+      },
+      {
+        projectId: "2",
+        projectName: "Project 1",
+        projectManager: "Popescu Ioana",
+        evaluator: "Anda Khreiss",
+        customers: "Porsche Stuttgart",
         projectDays: 10,
       },
       {
-        projectId: 2,
-        projectName: "name2",
-        projectManager: "m12",
-        evaluator: ["ev12"],
-        customers: ["c1", "c2"],
+        projectId: "3",
+        projectName: "Project 2",
+        projectManager: "Andrew Smith",
+        evaluator: "Andrew Smith",
+        customers: "Porsche Stuttgart",
         projectDays: 100,
       },
+
     ]);
   }, []);
 
@@ -98,38 +121,49 @@ export default function NewPEG() {
     }
 
     const myPEG = {
-      from_user_id: user.email,
-      employee_name: user.name,
-      personnel_number: user.personalNumber,
-      current_career_level: user.careerLevel,
-      organizational_assignment: user.organizationalAssignment,
+      peg_id: user.personalNumber,
+      fiscal_year: 2021,
+      user_id: user.email,
       date_of_peg: getCurrentDate("/"),
+      project_id: selectedProject.projectId,
+      customer_name: selectedProject.customers,
       name_of_project: projectRef.current.value,
-      project_id: projectID,
-      number_of_days_evaluated: numberOfDaysEvaluated,
+      name_of_manager: selectedProject.projectManager,
+      evaluator_name: selectedProject.evaluator,
+      no_of_project_days_evaluated: selectedProject.projectDays,
+      criteria: 1,
+      status: "pending"
     };
 
-    console.log(myPEG);
 
-    //   await axios.request({
-    //     method: "POST",
-    //     url: API.backend + "addFeedback",
-    //     data: myFeedback,
-    //   });
+    try {
+      await axios.request({
+        method: "POST",
+        url: API.backend + "addPeg/",
+        data: myPEG,
+      })
+      console.log(myPEG);
 
-    //   userRef.current.value = "";
-    //   projectRef.current.value = "";
-    //   setcategoryValue(null);
-    //   setIsAnonym(false);
+      //toast success
+      toast({
+        title: "Success.",
+        description: "PEG added successfully.",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
 
-    //   toast({
-    //     title: "Success.",
-    //     description: "Request sent successfully.",
-    //     status: "success",
-    //     duration: 5000,
-    //     isClosable: true,
-    //     position: "top-right",
-    //   });
+    } catch (error) {
+      toast({
+        title: "Failed.",
+        description: "Something went wrong.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      })
+    }
   };
 
   return (
@@ -173,10 +207,33 @@ export default function NewPEG() {
           </FormControl>
           {selectedProject && (
             <Flex flexDir="column">
-              <Text>Name: {selectedProject.projectName}</Text>
-              <Text>Manager: {selectedProject.projectManager}</Text>
-              <Text>Evaluator: {selectedProject.evaluator}</Text>
-              <Text>Days: {selectedProject.projectDays}</Text>
+              <FormControl id="project-name" isDisabled padding="2">
+                <FormLabel>Name</FormLabel>
+                <Input type="text" value={selectedProject.projectName} />
+              </FormControl>
+              <FormControl id="project-manager" isDisabled padding="2">
+                <FormLabel>Manager</FormLabel>
+                <Input type="text" value={selectedProject.projectManager} />
+              </FormControl>
+              {/* <FormControl id="evaluator" isDisabled padding="2">
+                <FormLabel>Evaluator</FormLabel>
+                <Input type="text" value={selectedProject.evaluator} />
+              </FormControl> */}
+              <FormControl id="evaluator" padding="2">
+                <FormLabel>Name of the evaluator</FormLabel>
+                <Select
+                  placeholder="Select evaluator"
+                  ref={evaluatorRef}
+                >
+                  {evaluators.map((obj, i) => (
+                    <option key={i}>{obj.evaluatorName}</option>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormControl id="evaluator" isDisabled padding="2">
+                <FormLabel>Days</FormLabel>
+                <Input type="text" value={selectedProject.projectDays} />
+              </FormControl>
             </Flex>
           )}
 
