@@ -1,22 +1,18 @@
 import { Flex } from "@chakra-ui/react";
-import { Heading, Text } from "@chakra-ui/layout";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { userActions } from "../store/user/user-slice";
+import { Heading } from "@chakra-ui/layout";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { FaPaperPlane } from "react-icons/fa";
 import { API } from "../utils/API";
 import axios from "axios";
 import {
   FormControl,
   FormLabel,
-  FormErrorMessage,
   Input,
-  FormHelperText,
   Select,
   Button,
   useToast,
 } from "@chakra-ui/react";
-import { auth } from "../firebase";
 
 export function getCurrentDate(separator = "") {
   let newDate = new Date();
@@ -24,59 +20,55 @@ export function getCurrentDate(separator = "") {
   let month = newDate.getMonth() + 1;
   let year = newDate.getFullYear();
 
-  return `${year}${separator}${month < 10 ? `0${month}` : `${month}`
-    }${separator}${date}`;
+  return `${year}${separator}${
+    month < 10 ? `0${month}` : `${month}`
+  }${separator}${date}`;
 }
 
 export default function NewPEG() {
   const projectRef = React.useRef(null);
-  const customerRef = React.useRef(null);
   const evaluatorRef = React.useRef(null);
-  const dispatch = useDispatch();
 
   const toast = useToast();
 
   const user = useSelector((state) => state.user);
-  const [projectID, setProjectID] = useState(null);
   const [selectedProject, setSelectedProject] = useState(null);
 
-  const [nameOfProjectManager, setNameOfProjectManager] = useState(null);
-  const [numberOfDaysEvaluated, setNumberOfDaysEvaluated] = useState(null);
+  const availableProjects = [
+    "Galactic colonization",
+    "Web 3.0",
+    "Backfeed-Coin",
+  ];
 
   // data
-  const [customers, setCustomers] = useState([]);
   const [evaluators, setEvaluators] = useState([]);
   const [projects, setProjects] = useState([]);
 
+  React.useEffect(() => {
+    if (!selectedProject) return;
+    (async () => {
+      let members = await axios.request({
+        method: "GET",
+        url: "http://127.0.0.1:8000/getAllUsers/",
+      });
+
+      const myEvaluators = members.data.filter(
+        (m) => m.project === selectedProject.projectName
+      );
+      let evaluatorsArr = [];
+      myEvaluators.forEach((e, i) => {
+        evaluatorsArr.push({ evaluatorId: i, evaluatorName: e.name });
+      });
+      setEvaluators(evaluatorsArr);
+    })();
+  }, [selectedProject]);
+
   // load initial data
   React.useEffect(() => {
-    // (async () => {
-    // const response = await axios.request({
-    //     method: "GET",
-    //     url: API.backend + "getAllUsers",
-    // });
-
-    // setUsers(response.data);
-    // })();
-    setEvaluators([
-      {
-        evaluatorId: 1,
-        evaluatorName: "Anda Khreiss"
-      },
-      {
-        evaluatorId: 2,
-        evaluatorName: "Popescu Ioana"
-      },
-      {
-        evaluatorId: 3,
-        evaluatorName: "Andrew Smith"
-      },
-
-    ]);
     setProjects([
       {
         projectId: "1",
-        projectName: "Porsche App",
+        projectName: "Galactic colonization",
         projectManager: "Anda Khreiss",
         evaluator: "Popescu Ioana",
         customers: "Porsche Munchen",
@@ -84,7 +76,7 @@ export default function NewPEG() {
       },
       {
         projectId: "2",
-        projectName: "Project 1",
+        projectName: "Web 3.0",
         projectManager: "Popescu Ioana",
         evaluator: "Anda Khreiss",
         customers: "Porsche Stuttgart",
@@ -92,13 +84,12 @@ export default function NewPEG() {
       },
       {
         projectId: "3",
-        projectName: "Project 2",
+        projectName: "Backfeed-Coin",
         projectManager: "Andrew Smith",
         evaluator: "Andrew Smith",
         customers: "Porsche Stuttgart",
         projectDays: 100,
       },
-
     ]);
   }, []);
 
@@ -123,25 +114,24 @@ export default function NewPEG() {
     const myPEG = {
       peg_id: user.personalNumber,
       fiscal_year: 2021,
-      user_id: user.email,
+      user_id: user.uid,
       date_of_peg: getCurrentDate("/"),
       project_id: selectedProject.projectId,
       customer_name: selectedProject.customers,
       name_of_project: projectRef.current.value,
       name_of_manager: selectedProject.projectManager,
-      evaluator_name: selectedProject.evaluator,
+      evaluator_name: evaluatorRef.current.value,
       no_of_project_days_evaluated: selectedProject.projectDays,
       criteria: 1,
-      status: "pending"
+      status: "pending",
     };
-
 
     try {
       await axios.request({
         method: "POST",
         url: API.backend + "addPeg/",
         data: myPEG,
-      })
+      });
       console.log(myPEG);
 
       //toast success
@@ -153,7 +143,6 @@ export default function NewPEG() {
         isClosable: true,
         position: "top-right",
       });
-
     } catch (error) {
       toast({
         title: "Failed.",
@@ -162,7 +151,7 @@ export default function NewPEG() {
         duration: 5000,
         isClosable: true,
         position: "top-right",
-      })
+      });
     }
   };
 
@@ -221,10 +210,7 @@ export default function NewPEG() {
               </FormControl> */}
               <FormControl id="evaluator" padding="2">
                 <FormLabel>Name of the evaluator</FormLabel>
-                <Select
-                  placeholder="Select evaluator"
-                  ref={evaluatorRef}
-                >
+                <Select placeholder="Select evaluator" ref={evaluatorRef}>
                   {evaluators.map((obj, i) => (
                     <option key={i}>{obj.evaluatorName}</option>
                   ))}
@@ -236,35 +222,6 @@ export default function NewPEG() {
               </FormControl>
             </Flex>
           )}
-
-          {/* <FormControl id="project-id" padding="2">
-            <FormLabel>Project ID</FormLabel>
-            <Input type="text" />
-          </FormControl>
-          <FormControl id="name-of-project-manager" padding="2">
-            <FormLabel>Name of the project manager</FormLabel>
-            <Input type="text" />
-          </FormControl>
-          <FormControl id="customer-name" padding="2">
-            <FormLabel>Choose customer name:</FormLabel>
-            <Select placeholder="Select customer name" ref={customerRef}>
-              {customers.map((obj, i) => (
-                <option key={i}>{obj}</option>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl id="name-of-evaluator" padding="2">
-            <FormLabel>Name of the evaluator</FormLabel>
-            <Select placeholder="Select evaluator" ref={evaluatorRef}>
-              {evaluators.map((obj, i) => (
-                <option key={i}>{obj}</option>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl id="number-of-project-days-evaluated" padding="2">
-            <FormLabel>Number of project days evaluated</FormLabel>
-            <Input type="number" />
-          </FormControl> */}
         </Flex>
       </Flex>
       <Button

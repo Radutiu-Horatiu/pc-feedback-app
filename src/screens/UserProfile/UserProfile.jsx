@@ -64,6 +64,7 @@ export default function UserProfile() {
         personal_number: personalNumber,
         career_level: careerLevel,
         organisational_assignment: organizationalAssignment,
+        completedProfile: true
       });
       dispatch(userActions.setCompletedProfile({ completedProfile: true }));
       toast({

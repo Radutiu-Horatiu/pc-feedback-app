@@ -14,7 +14,7 @@ import { API } from "../../utils/API";
 import { useColorModeValue, useColorMode } from "@chakra-ui/color-mode";
 import { useSelector } from "react-redux";
 import { useRef } from "react";
-import { FaCaretDown, FaCaretRight, FaCheck } from "react-icons/fa";
+import { FaCheck } from "react-icons/fa";
 
 export default function MyTeamScreen() {
   const [teamMembers, setteamMembers] = useState([]);
