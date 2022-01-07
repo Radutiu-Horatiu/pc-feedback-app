@@ -10,9 +10,10 @@ import {
   FormControl,
 } from "@chakra-ui/react";
 import { Formik, Form, Field } from "formik";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useToast } from "@chakra-ui/react";
+import { FaPaperPlane, FaSave, FaTimes } from "react-icons/fa";
 import axios from "axios";
 import { Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
 import { API } from "../../utils/API";
@@ -31,10 +32,12 @@ export default function NewPEG() {
   const [feedbacks, setFeedbacks] = useState([]);
   const [PEGs, setPEGs] = useState([]);
   const [openFeedback, setOpenFeedback] = useState(null);
+  const [saveOnly, setSaveOnly] = useState(false);
   const [openPEG, setOpenPEG] = useState(null);
+  const [currentPEG, setCurrentPEG] = useState(null);
 
   // load initial data
-  React.useEffect(() => {
+  useEffect(() => {
     (async () => {
       // get feedbacks
       let response = await axios.request({
@@ -54,8 +57,6 @@ export default function NewPEG() {
         url: API.backend + "allPegs",
       });
 
-      console.log(user.uid)
-
       let filteredPEGs = response.data.filter(
         (p) => p["User id"] === user.uid && p.Status === "pending"
       );
@@ -63,6 +64,12 @@ export default function NewPEG() {
       setPEGs(filteredPEGs);
     })();
   }, [user]);
+
+  useEffect(() => {
+    if (openPEG) {
+      setCurrentPEG(PEGs.filter((p) => p.id === openPEG)[0]);
+    }
+  }, [openPEG]);
 
   // send feedback to backend
   const sendFeedback = async (id) => {
@@ -165,8 +172,21 @@ export default function NewPEG() {
     const docRef = doc(db, "peg", openPEG);
     await updateDoc(docRef, {
       result: myResult,
-      Status: "completed",
+      Status: saveOnly ? "pending" : "completed",
     });
+
+    if (saveOnly) {
+      toast({
+        title: "Succes.",
+        description: "PEG saved.",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top-right",
+      });
+      setSaveOnly(false);
+      return;
+    }
 
     // remove peg from list
     setPEGs((current) => current.filter((p) => p.id !== openPEG));
@@ -223,7 +243,7 @@ export default function NewPEG() {
       )}
 
       {/* Open modal PEG */}
-      {openPEG && (
+      {openPEG && currentPEG && (
         <Flex
           pos="absolute"
           w="100vw"
@@ -245,24 +265,42 @@ export default function NewPEG() {
             <Text fontWeight="bold">Resolve PEG request</Text>
             <Formik
               initialValues={{
-                prof_industry_exp_rating: 5,
-                proj_program_management_rating: 5,
-                strategy_focus_rating: 5,
-                customer_focus_rating: 5,
-                employee_focus_rating: 5,
-                excellence_focus_rating: 5,
-                prof_industry_exp_desc: "",
-                proj_program_management_desc: "",
-                strategy_focus_desc: "",
-                customer_focus_desc: "",
-                employee_focus_desc: "",
-                excellence_focus_desc: "",
-                prof_industry_exp_comm: "",
-                proj_program_management_comm: "",
-                strategy_focus_comm: "",
-                customer_focus_comm: "",
-                employee_focus_comm: "",
-                excellence_focus_comm: "",
+                prof_industry_exp_rating:
+                  currentPEG.result.prof_industry_exp.rating || 5,
+                proj_program_management_rating:
+                  currentPEG.result.proj_program_management.rating || 5,
+                strategy_focus_rating:
+                  currentPEG.result.strategy_focus.rating || 5,
+                customer_focus_rating:
+                  currentPEG.result.customer_focus.rating || 5,
+                employee_focus_rating:
+                  currentPEG.result.employee_focus.rating || 5,
+                excellence_focus_rating:
+                  currentPEG.result.excellence_focus.rating || 5,
+                prof_industry_exp_desc:
+                  currentPEG.result.prof_industry_exp.description || "",
+                proj_program_management_desc:
+                  currentPEG.result.proj_program_management.description || "",
+                strategy_focus_desc:
+                  currentPEG.result.strategy_focus.description || "",
+                customer_focus_desc:
+                  currentPEG.result.customer_focus.description || "",
+                employee_focus_desc:
+                  currentPEG.result.employee_focus.description || "",
+                excellence_focus_desc:
+                  currentPEG.result.excellence_focus.description || "",
+                prof_industry_exp_comm:
+                  currentPEG.result.prof_industry_exp.comments || "",
+                proj_program_management_comm:
+                  currentPEG.result.proj_program_management.comments || "",
+                strategy_focus_comm:
+                  currentPEG.result.strategy_focus.comments || "",
+                customer_focus_comm:
+                  currentPEG.result.customer_focus.comments || "",
+                employee_focus_comm:
+                  currentPEG.result.employee_focus.comments || "",
+                excellence_focus_comm:
+                  currentPEG.result.excellence_focus.comments || "",
               }}
               onSubmit={(values, actions) => {
                 submitForm(values);
@@ -579,10 +617,24 @@ export default function NewPEG() {
                   </Table>
 
                   <Flex mt="1vh">
-                    <Button type="submit" w="50%">
+                    <Button type="submit" w="33%" leftIcon={<FaPaperPlane />}>
                       Send
                     </Button>
-                    <Button onClick={() => setOpenPEG(null)} w="50%" ml="1vh">
+                    <Button
+                      type="submit"
+                      onClick={() => setSaveOnly(true)}
+                      w="33%"
+                      ml="1vh"
+                      leftIcon={<FaSave />}
+                    >
+                      Save
+                    </Button>
+                    <Button
+                      onClick={() => setOpenPEG(null)}
+                      leftIcon={<FaTimes />}
+                      w="33%"
+                      ml="1vh"
+                    >
                       Close
                     </Button>
                   </Flex>

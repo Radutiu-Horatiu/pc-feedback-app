@@ -126,7 +126,6 @@ export default function NewPEG() {
         url: API.backend + "addPeg/",
         data: myPEG,
       });
-      console.log(myPEG);
 
       //toast success
       toast({

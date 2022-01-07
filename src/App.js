@@ -24,6 +24,7 @@ import axios from "axios";
 import MyTeamScreen from "./screens/MyTeam/MyTeamScreen";
 import Lottie from "react-lottie";
 import lottieLoadingAnimationData from "./assets/loading_lottie.json";
+import ResetPassword from "./screens/ResetPassword/ResetPassword";
 
 function App() {
   const dispatch = useDispatch();
@@ -135,6 +136,11 @@ function App() {
                   <>
                     <Route path="/register" exact component={RegisterScreen} />
                     <Route path="/login" exact component={LoginScreen} />
+                    <Route
+                      path="/reset-password"
+                      exact
+                      component={ResetPassword}
+                    />
                     <Route path="/" exact component={LandingPage} />
                   </>
                 )}

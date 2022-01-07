@@ -11,7 +11,6 @@ export default function RequestPeg() {
 		fetch("http://127.0.0.1:8000/allPegs/")
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(data);
 				setpegs(data);
 			});
 	}, []);

@@ -71,8 +71,16 @@ export default function LoginScreen() {
           />
         </FormControl>
       </Box>
-      <Box align="center" my="5vh">
+      <Box my="5vh">
         <FormControl>
+          <Text
+            _hover={{ textDecoration: "underline" }}
+            cursor={"pointer"}
+            mb={"1vh"}
+            onClick={() => history.push("/reset-password")}
+          >
+            <strong>Forgot password?</strong>
+          </Text>
           <Button colorScheme="teal" onClick={login} w="100%">
             Log In
           </Button>
