@@ -30,20 +30,12 @@ export default function RequestPeg() {
 									<Text fontWeight="bold">#{i} PEG</Text>
 									{/* <Text>{peg["Customer name"]}</Text> */}
 									<Text fontSize={"2vh"} color={"teal.400"} fontWeight={"bold"}>
-										{peg["Project name"]} #{peg["Project id"]}
+										{peg["Project name"]}
 									</Text>
-									<Text>De catre: {peg["Evaluator name"]}</Text>
-									<Flex align={"center"} my="1vh">
-										<FaUser />
-										<Text mr="2vh" ml="1vh" fontWeight={"bold"}>
-											{peg["Manager name"]}
-										</Text>
-										<FaCaretRight />
-										<FaUser style={{ marginLeft: "2vh" }} />
-										<Text ml="1vh" fontWeight={"bold"}>
-											{peg["Evaluator name"]}
-										</Text>
-									</Flex>
+									<Text fontSize="1.5vh">Manager: {peg["Manager name"]}</Text>
+									<Text mr="2vh" fontWeight={"bold"}>
+										Evaluator: {peg["Evaluator name"]}
+									</Text>
 									{/* <Text>{peg["Fiscal year"]}</Text> */}
 									{/* <Text>{peg["Manager name"]}</Text> */}
 									{/* <Text>{peg["Number of project days evaluated"]}</Text> */}
