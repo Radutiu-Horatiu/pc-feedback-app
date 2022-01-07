@@ -1,6 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 import { Heading } from "@chakra-ui/layout";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { FaPaperPlane } from "react-icons/fa";
 import { API } from "../utils/API";
@@ -27,18 +27,18 @@ export function getCurrentDate(separator = "") {
 
 export default function NewPEG() {
   const projectRef = React.useRef(null);
-  const evaluatorRef = React.useRef(null);
 
   const toast = useToast();
 
   const user = useSelector((state) => state.user);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedEvaluator, setSelectedEvaluator] = useState(null);
 
   // data
   const [evaluators, setEvaluators] = useState([]);
   const [projects, setProjects] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!selectedProject) return;
     (async () => {
       let members = await axios.request({
@@ -51,14 +51,14 @@ export default function NewPEG() {
       );
       let evaluatorsArr = [];
       myEvaluators.forEach((e, i) => {
-        evaluatorsArr.push({ evaluatorId: i, evaluatorName: e.name });
+        evaluatorsArr.push({ evaluatorId: e.id, evaluatorName: e.name });
       });
       setEvaluators(evaluatorsArr);
     })();
   }, [selectedProject]);
 
   // load initial data
-  React.useEffect(() => {
+  useEffect(() => {
     setProjects([
       {
         projectId: "1",
@@ -108,13 +108,13 @@ export default function NewPEG() {
     const myPEG = {
       peg_id: user.personalNumber,
       fiscal_year: 2021,
-      user_id: user.uid,
+      user_id: selectedEvaluator.evaluatorId,
       date_of_peg: getCurrentDate("/"),
       project_id: selectedProject.projectId,
       customer_name: selectedProject.customers,
       name_of_project: projectRef.current.value,
       name_of_manager: selectedProject.projectManager,
-      evaluator_name: evaluatorRef.current.value,
+      evaluator_name: selectedEvaluator.evaluatorName,
       no_of_project_days_evaluated: selectedProject.projectDays,
       criteria: 1,
       status: "pending",
@@ -204,9 +204,20 @@ export default function NewPEG() {
               </FormControl> */}
               <FormControl id="evaluator" padding="2">
                 <FormLabel>Name of the evaluator</FormLabel>
-                <Select placeholder="Select evaluator" ref={evaluatorRef}>
+                <Select
+                  placeholder="Select evaluator"
+                  onChange={(e) =>
+                    setSelectedEvaluator(
+                      evaluators.filter(
+                        (obj) => obj.evaluatorId === e.target.value
+                      )[0]
+                    )
+                  }
+                >
                   {evaluators.map((obj, i) => (
-                    <option key={i}>{obj.evaluatorName}</option>
+                    <option key={i} value={obj.evaluatorId}>
+                      {obj.evaluatorName}
+                    </option>
                   ))}
                 </Select>
               </FormControl>

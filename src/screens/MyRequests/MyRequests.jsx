@@ -54,11 +54,13 @@ export default function NewPEG() {
         url: API.backend + "allPegs",
       });
 
-      setPEGs(
-        response.data.filter(
-          (p) => p["User id"] === user.uid && p.Status === "pending"
-        )
+      console.log(user.uid)
+
+      let filteredPEGs = response.data.filter(
+        (p) => p["User id"] === user.uid && p.Status === "pending"
       );
+
+      setPEGs(filteredPEGs);
     })();
   }, [user]);
 
@@ -148,14 +150,15 @@ export default function NewPEG() {
         description: values.excellence_focus_desc,
         comments: values.excellence_focus_comm,
       },
-      overall_rating:
-        ((parseInt(values.prof_industry_exp_rating) +
+      overall_rating: (
+        (parseInt(values.prof_industry_exp_rating) +
           parseInt(values.proj_program_management_rating) +
           parseInt(values.strategy_focus_rating) +
           parseInt(values.customer_focus_rating) +
           parseInt(values.employee_focus_rating) +
           parseInt(values.excellence_focus_rating)) /
-        6).toFixed(2),
+        6
+      ).toFixed(2),
     };
 
     // update doc in firebase
