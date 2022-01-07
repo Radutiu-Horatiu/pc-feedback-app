@@ -1,5 +1,8 @@
 import { Flex, Heading, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import { Button } from "@chakra-ui/button";
+import { FaCaretRight, FaCheck, FaUser } from "react-icons/fa";
+
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel } from "@chakra-ui/accordion";
 import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption } from "@chakra-ui/react";
 export default function RequestPeg() {
@@ -12,7 +15,9 @@ export default function RequestPeg() {
 				setpegs(data);
 			});
 	}, []);
-
+	const downloadPeg = (pegId) => {
+		console.log(pegId);
+	};
 	return (
 		<Flex flexDir="column" h="90vh" overflowY="scroll" w="80vw">
 			<Heading>All PEGs</Heading>
@@ -24,17 +29,51 @@ export default function RequestPeg() {
 								<Flex w="100%" justify="center" flexDir="column">
 									<Text fontWeight="bold">#{i} PEG</Text>
 									{/* <Text>{peg["Customer name"]}</Text> */}
-									<Text>Cand: {new Date(peg["Date of PEG"]).toLocaleDateString("en-US")}</Text>
+									<Text fontSize={"2vh"} color={"teal.400"} fontWeight={"bold"}>
+										{peg["Project name"]} #{peg["Project id"]}
+									</Text>
 									<Text>De catre: {peg["Evaluator name"]}</Text>
+									<Flex align={"center"} my="1vh">
+										<FaUser />
+										<Text mr="2vh" ml="1vh" fontWeight={"bold"}>
+											{peg["Manager name"]}
+										</Text>
+										<FaCaretRight />
+										<FaUser style={{ marginLeft: "2vh" }} />
+										<Text ml="1vh" fontWeight={"bold"}>
+											{peg["Evaluator name"]}
+										</Text>
+									</Flex>
 									{/* <Text>{peg["Fiscal year"]}</Text> */}
 									{/* <Text>{peg["Manager name"]}</Text> */}
 									{/* <Text>{peg["Number of project days evaluated"]}</Text> */}
 									{/* <Text>{peg["Personal Number"]}</Text> */}
 									{/* <Text>{peg["Project id"]}</Text> */}
-									<Text>Pe ce proiect: {peg["Project name"]}</Text>
 									{/* <Text>{peg["Status"]}</Text> */}
 									{/* <Text>{peg["User id"]}</Text> */}
+									<Text fontSize="1.3vh">{new Date(peg["Date of PEG"]).toLocaleString("en-US")}</Text>
 								</Flex>
+								{peg["Status"] == "completed" && (
+									<Button
+										mr="2vh"
+										onClick={() => {
+											downloadPeg(peg.id);
+										}}
+									>
+										Download
+									</Button>
+								)}
+								<Button
+									textTransform="capitalize"
+									fontWeight="bold"
+									color={peg["Status"] === "completed" ? "teal.200" : "teal.600"}
+									leftIcon={peg["Status"] === "completed" && <FaCheck />}
+									isLoading={peg["Status"] === "pending" && true}
+									loadingText={peg["Status"] === "pending" && "Pending"}
+									mr="2vh"
+								>
+									{peg["Status"]}
+								</Button>
 							</Flex>
 							<AccordionIcon />
 						</AccordionButton>
