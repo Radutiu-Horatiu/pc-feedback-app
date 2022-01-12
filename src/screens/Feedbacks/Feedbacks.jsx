@@ -11,10 +11,11 @@ import axios from "axios";
 import React, { useState } from "react";
 import { API } from "../../utils/API";
 import { FaCaretRight, FaCheck, FaUser } from "react-icons/fa";
+import { Select } from '@chakra-ui/react'
 
 export default function Feedbacks() {
   const [feedbacks, setFeedbacks] = useState([]);
-
+  const [displayedfeedbacks, setDisplayedfeedbacks] = useState([]);
   React.useEffect(() => {
     (async () => {
       const response = await axios.request({
@@ -23,14 +24,34 @@ export default function Feedbacks() {
       });
 
       setFeedbacks(response.data);
+      setDisplayedfeedbacks(response.data);
     })();
   }, []);
+
+  const [selectedfeedback, setselectedfeedback] = useState();
+  const showFilteredFeedbacks = () => {
+    const feedbacksFiltered = feedbacks.filter(
+      (p) => p.status === selectedfeedback);
+    setDisplayedfeedbacks(feedbacksFiltered);
+  }
+  const clearFilteredFeedbacks = () => {
+    setDisplayedfeedbacks(feedbacks);
+  }
 
   return (
     <Flex flexDir="column" h="90vh" overflowY="scroll" w="80vw">
       <Heading>All Feedbacks</Heading>
+      <br />
+      <Flex>
+        <Select placeholder='Select Feedback Status' width={300} mr="2vh" value={selectedfeedback} onChange={e => setselectedfeedback(e.target.value)}>
+          <option value='sent'>Pending</option>
+          <option value='received'>Received</option>
+        </Select>
+        <Button mr="2vh" color="teal.200" onClick={() => { showFilteredFeedbacks(); }}>FILTER</Button>
+        <Button mr="2vh" color="teal.200" onClick={() => { clearFilteredFeedbacks(); }}>REFRESH</Button>
+      </Flex>
       <Accordion allowToggle mt="1vh" px="1vh">
-        {feedbacks.map((obj, i) => (
+        {displayedfeedbacks.map((obj, i) => (
           <AccordionItem key={i} border="none">
             <AccordionButton p="2vh" borderWidth={1} borderRadius={20} my="2vh">
               <Flex flex="1" textAlign="left" align="center">
