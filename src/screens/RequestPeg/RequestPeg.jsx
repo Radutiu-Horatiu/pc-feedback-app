@@ -2,26 +2,51 @@ import { Flex, Heading, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { Button } from "@chakra-ui/button";
 import { FaCaretRight, FaCheck, FaUser } from "react-icons/fa";
-
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel } from "@chakra-ui/accordion";
 import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption } from "@chakra-ui/react";
+import { Select } from '@chakra-ui/react'
+
 export default function RequestPeg() {
 	const [pegs, setpegs] = useState([]);
+	const [displayedpegs, setdisplayedpegs] = useState([]);
 	useEffect(() => {
 		fetch("http://127.0.0.1:8000/allPegs/")
 			.then((response) => response.json())
 			.then((data) => {
 				setpegs(data);
+				setdisplayedpegs(data);
 			});
 	}, []);
 	const downloadPeg = (pegId) => {
 		console.log(pegId);
 	};
+    const [selectedpeg, setselectedpeg] = useState();
+	const showFilteredPegs = () => {
+		console.log("FILTER PEGS")
+		console.log(pegs.length)
+		const pegsFiltered = pegs.filter(
+			(p) => p.Status === selectedpeg);
+		console.log(pegsFiltered.length)
+		console.log(pegsFiltered)
+		setdisplayedpegs(pegsFiltered);
+	}
+	const clearFilteredPegs = () => {
+		setdisplayedpegs(pegs);
+	}
 	return (
 		<Flex flexDir="column" h="90vh" overflowY="scroll" w="80vw">
 			<Heading>All PEGs</Heading>
+			<br />
+			<Flex>
+				<Select placeholder='Select Peg Filter option' width={300} mr="2vh" value ={selectedpeg} onChange={e=>setselectedpeg(e.target.value)}>
+					<option value='pending'>Pending</option>
+					<option value='completed'>Completed</option>
+				</Select>
+				<Button mr="2vh" color="teal.200" onClick={() => {showFilteredPegs();}}>FILTER</Button>
+				<Button mr="2vh" color="teal.200" onClick={() => {clearFilteredPegs();}}>REFRESH</Button>
+			</Flex>
 			<Accordion allowToggle mt="1vh" px="1vh">
-				{pegs.map((peg, i) => (
+				{displayedpegs.map((peg, i) => (
 					<AccordionItem key={i} border="none">
 						<AccordionButton p="2vh" borderWidth={1} borderRadius={20} my="2vh">
 							<Flex flex="1" textAlign="left" align="center">
