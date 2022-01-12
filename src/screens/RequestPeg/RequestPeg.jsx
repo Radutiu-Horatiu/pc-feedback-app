@@ -22,12 +22,8 @@ export default function RequestPeg() {
 	};
     const [selectedpeg, setselectedpeg] = useState();
 	const showFilteredPegs = () => {
-		console.log("FILTER PEGS")
-		console.log(pegs.length)
 		const pegsFiltered = pegs.filter(
 			(p) => p.Status === selectedpeg);
-		console.log(pegsFiltered.length)
-		console.log(pegsFiltered)
 		setdisplayedpegs(pegsFiltered);
 	}
 	const clearFilteredPegs = () => {
@@ -38,7 +34,7 @@ export default function RequestPeg() {
 			<Heading>All PEGs</Heading>
 			<br />
 			<Flex>
-				<Select placeholder='Select Peg Filter option' width={300} mr="2vh" value ={selectedpeg} onChange={e=>setselectedpeg(e.target.value)}>
+				<Select placeholder='Select PEG Status' width={300} mr="2vh" value ={selectedpeg} onChange={e=>setselectedpeg(e.target.value)}>
 					<option value='pending'>Pending</option>
 					<option value='completed'>Completed</option>
 				</Select>

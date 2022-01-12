@@ -30,29 +30,25 @@ export default function Feedbacks() {
 
   const [selectedfeedback, setselectedfeedback] = useState();
   const showFilteredFeedbacks = () => {
-    console.log("FILTER FEEDBACKS")
-    console.log(feedbacks.length)
-		const feedbacksFiltered = feedbacks.filter(
-			(p) => p.status === selectedfeedback);
-		console.log(feedbacksFiltered.length)
-    console.log(feedbacksFiltered)
+    const feedbacksFiltered = feedbacks.filter(
+      (p) => p.status === selectedfeedback);
     setDisplayedfeedbacks(feedbacksFiltered);
   }
   const clearFilteredFeedbacks = () => {
-		setDisplayedfeedbacks(feedbacks);
-	}
+    setDisplayedfeedbacks(feedbacks);
+  }
 
   return (
     <Flex flexDir="column" h="90vh" overflowY="scroll" w="80vw">
       <Heading>All Feedbacks</Heading>
       <br />
       <Flex>
-        <Select placeholder='Select Feedback Filter option' width={300} mr="2vh" value ={selectedfeedback} onChange={e=>setselectedfeedback(e.target.value)}>
-          <option value='received'>Received</option>
+        <Select placeholder='Select Feedback Status' width={300} mr="2vh" value={selectedfeedback} onChange={e => setselectedfeedback(e.target.value)}>
           <option value='sent'>Pending</option>
+          <option value='received'>Received</option>
         </Select>
-        <Button mr="2vh" color="teal.200" onClick={() => {showFilteredFeedbacks();}}>FILTER</Button>
-        <Button mr="2vh" color="teal.200" onClick={() => {clearFilteredFeedbacks();}}>REFRESH</Button>
+        <Button mr="2vh" color="teal.200" onClick={() => { showFilteredFeedbacks(); }}>FILTER</Button>
+        <Button mr="2vh" color="teal.200" onClick={() => { clearFilteredFeedbacks(); }}>REFRESH</Button>
       </Flex>
       <Accordion allowToggle mt="1vh" px="1vh">
         {displayedfeedbacks.map((obj, i) => (
