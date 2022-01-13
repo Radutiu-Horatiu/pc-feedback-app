@@ -46,7 +46,7 @@ export default function MyTeamScreen() {
     (async () => {
       let members = await axios.request({
         method: "GET",
-        url: "http://127.0.0.1:8000/getAllUsers/",
+        url: API.backend + "getAllUsers/",
       });
 
       if (user.role !== "Administrator") {

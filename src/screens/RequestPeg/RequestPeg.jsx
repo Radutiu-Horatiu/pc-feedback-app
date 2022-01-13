@@ -5,12 +5,13 @@ import { FaCaretRight, FaCheck, FaUser } from "react-icons/fa";
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel } from "@chakra-ui/accordion";
 import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption } from "@chakra-ui/react";
 import { Select } from '@chakra-ui/react'
+import { API } from "../../utils/API";
 
 export default function RequestPeg() {
 	const [pegs, setpegs] = useState([]);
 	const [displayedpegs, setdisplayedpegs] = useState([]);
 	useEffect(() => {
-		fetch("http://127.0.0.1:8000/allPegs/")
+		fetch(API.backend + "allPegs/")
 			.then((response) => response.json())
 			.then((data) => {
 				setpegs(data);

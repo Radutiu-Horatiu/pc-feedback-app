@@ -57,7 +57,7 @@ export default function RegisterScreen() {
           });
           const myUser = { ...response.data, uid: userCredentials.user.uid };
           if (myUser) dispatch(userActions.setUser(myUser));
-          history.push("/");
+          history.push("/my-profile");
         })();
       })
       .catch((e) => {
